@@ -1,4 +1,5 @@
 ﻿using UnityEditor;
+using UnityEditor.Callbacks;
 using UnityEngine;
 using System.Collections;
 using System.IO;
@@ -16,6 +17,14 @@ public class UnityAdsSettingsEditor : Editor
 		if (settings == null) settings = CreateUnityAdsSettings();
 
 		if (settings != null) Selection.activeObject = settings;
+	}
+
+	[PostProcessSceneAttribute]
+	public static void OnPostProcessScene ()
+	{
+		UnityAdsSettings settings = LoadUnityAdsSettings();
+
+		if (settings == null) settings = CreateUnityAdsSettings();
 	}
 
 	private static UnityAdsSettings LoadUnityAdsSettings ()
