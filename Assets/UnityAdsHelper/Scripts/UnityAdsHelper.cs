@@ -11,10 +11,15 @@ public class UnityAdsHelper : MonoBehaviour
 	public static Action onSkippedEvent;
 	public static Action onFailedEvent;
 
+	private static string _gamerSID;
+	public static void SetGamerSID (string gamerSID)
+	{
+		_gamerSID = string.IsNullOrEmpty(gamerSID) ? null : gamerSID;
+	}
+
 #if UNITY_IOS || UNITY_ANDROID
 
 	private static bool _isInitializing;
-	private static UnityAdsSettings _settings;
 
 	private static UnityAdsHelper _instance;
 	private static UnityAdsHelper GetInstance ()
@@ -35,12 +40,13 @@ public class UnityAdsHelper : MonoBehaviour
 		if (_instance == null) _instance = this;
 		else if (_instance != this) Destroy(gameObject);
 	}
-
-	void Start ()
-	{
-		_settings = (UnityAdsSettings)Resources.Load("UnityAdsSettings");
-
-		if (_settings.initOnStart) OnInitialize();
+	
+	public static void Initialize () 
+	{ 
+		if (_isInitializing) return;
+		
+		UnityAdsHelper instance = GetInstance();
+		if (instance != null) instance.OnInitialize();
 	}
 	
 	private void OnInitialize ()
@@ -49,7 +55,9 @@ public class UnityAdsHelper : MonoBehaviour
 
 		Debug.Log("Running precheck for Unity Ads initialization...");
 		
-		if (_settings == null)
+		UnityAdsSettings settings = (UnityAdsSettings)Resources.Load("UnityAdsSettings");
+
+		if (settings == null)
 		{
 			Debug.LogError("Failed to initialize Unity Ads. Settings file not found.");
 			_isInitializing = false;
@@ -59,7 +67,7 @@ public class UnityAdsHelper : MonoBehaviour
 		string gameId = null;
 		
 	#if UNITY_IOS
-		gameId = _settings.iosGameId;
+		gameId = settings.iosGameId;
 	#elif UNITY_ANDROID
 		gameId = settings.androidGameId;
 	#endif
@@ -78,18 +86,19 @@ public class UnityAdsHelper : MonoBehaviour
 		}
 		else
 		{
-			Advertisement.debugLevel = Advertisement.DebugLevel.None;	
-			if (_settings.showInfoLogs) Advertisement.debugLevel    |= Advertisement.DebugLevel.Info;
-			if (_settings.showDebugLogs) Advertisement.debugLevel   |= Advertisement.DebugLevel.Debug;
-			if (_settings.showWarningLogs) Advertisement.debugLevel |= Advertisement.DebugLevel.Warning;
-			if (_settings.showErrorLogs) Advertisement.debugLevel   |= Advertisement.DebugLevel.Error;
+			Advertisement.debugLevel = Advertisement.DebugLevel.None;
+
+			if (settings.showInfoLogs)    Advertisement.debugLevel |= Advertisement.DebugLevel.Info;
+			if (settings.showDebugLogs)   Advertisement.debugLevel |= Advertisement.DebugLevel.Debug;
+			if (settings.showWarningLogs) Advertisement.debugLevel |= Advertisement.DebugLevel.Warning;
+			if (settings.showErrorLogs)   Advertisement.debugLevel |= Advertisement.DebugLevel.Error;
 			
-			if (_settings.enableTestMode && !Debug.isDebugBuild)
+			if (settings.enableTestMode && !Debug.isDebugBuild)
 			{
 				Debug.LogWarning("Development Build must be enabled in Build Settings to enable test mode for Unity Ads.");
 			}
 			
-			bool isTestModeEnabled = Debug.isDebugBuild && _settings.enableTestMode;
+			bool isTestModeEnabled = Debug.isDebugBuild && settings.enableTestMode;
 			Debug.Log(string.Format("Precheck done. Initializing Unity Ads for game ID {0} with test mode {1}...",
 			                        gameId, isTestModeEnabled ? "enabled" : "disabled"));
 			
@@ -111,14 +120,6 @@ public class UnityAdsHelper : MonoBehaviour
 		yield break;
 	}
 	
-	public static void Initialize () 
-	{ 
-		if (_isInitializing) return;
-		
-		UnityAdsHelper instance = GetInstance();
-		if (instance != null) instance.OnInitialize();
-	}
-
 	public static bool isShowing { get { return Advertisement.isShowing; }}
 	public static bool isSupported { get { return Advertisement.isSupported; }}
 	public static bool isInitialized { get { return Advertisement.isInitialized; }}
@@ -142,6 +143,7 @@ public class UnityAdsHelper : MonoBehaviour
 			
 			ShowOptions options = new ShowOptions();
 			options.resultCallback = HandleShowResult;
+			options.gamerSid = _gamerSID;
 
 			Advertisement.Show(zoneId,options);
 		}
