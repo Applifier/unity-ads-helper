@@ -99,14 +99,13 @@ Ideally, you should only initialize the UnityAdsHelper once when your game first
 
 ## Unity Ads Demo
 
-Included with this project is a [UnityAdsDemo.scene](Assets/UnityAdsHelper/Demo/UnityAdsDemo.scene) and the following demo scripts:  
+Included with this project is a [UnityAdsDemo.scene](Assets/UnityAdsHelper/Demo/UnityAdsDemo.scene) and the following demo scripts:
+
 * [UnityAdsDemo.cs](Assets/UnityAdsHelper/Demo/Scripts/UnityAdsDemo.cs)  
 * [UnityAdsButton.cs](Assets/UnityAdsHelper/Demo/Scripts/UnityAdsButton.cs)  
 * [ShowAdOnLoad.cs](Assets/UnityAdsHelper/Demo/Scripts/ShowAdOnLoad.cs)
 
 Look them over. Try them out. And feel free to modify them for use in your own project.
-
-----
 
 ## Scripting API
 
