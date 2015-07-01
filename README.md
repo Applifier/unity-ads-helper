@@ -97,7 +97,6 @@ Ideally, you should only initialize the UnityAdsHelper once when your game first
 
 ### Using a Unity UI Button to Show Ads
 
-----
 ## Unity Ads Demo
 
 Included with this project is a [UnityAdsDemo.scene](Assets/UnityAdsHelper/Demo/UnityAdsDemo.scene) and the following demo scripts:  
@@ -108,7 +107,10 @@ Included with this project is a [UnityAdsDemo.scene](Assets/UnityAdsHelper/Demo/
 Look them over. Try them out. And feel free to modify them for use in your own project.
 
 ----
-## UnityAdsHelper Scripting API
+
+# Scripting API
+
+## UnityAdsHelper
 
 class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/MonoBehaviour.html)
 
