@@ -87,7 +87,7 @@ Ideally, you should only initialize the UnityAdsHelper once when your game first
 
 > **Pro Tip: Designing for User Experience**
 > 
-> One thing to be aware of is that you don't always have to initialize Unity Ads at the start of your game. 
+> One thing to consider when designing your game with ads in mind is that you don't always have to initialize Unity Ads at the start of your game. 
 > 
 > For instance, if you've designed your game to delay the showing of ads until after the user has had time to learn the rules of gameplay and progress through a few levels, it may take a few game sessions before they reach a point where they would start seeing ads. 
 > 
