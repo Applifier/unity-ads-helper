@@ -2,7 +2,7 @@
 The Unity Ads Helper is designed to streamline the integration of Unity Ads in Unity projects.
 
 Features include:  
-* Unity Ads settings are stored as a `ScriptableObject` available from the Unity Editor menu.  
+* Unity Ads settings are stored as a ScriptableObject available from the Unity Editor menu.  
 * A robust `Initialize` method that applies settings and logs when Unity Ads is initialized.  
 * A robust `ShowAd` method that applies options and handles and result callbacks.  
 * Events for handling show results:  
@@ -52,7 +52,7 @@ In this example, we'll show you how to initialize Unity Ads using the UnityAdsHe
 
 ### Initializing the UnityAdsHelper
 
-One of the nice things about the UnityAdsHelper script is that it can be initialized by calling the `Initialize()` method from one of your game scripts, or simply by adding it as a component to a `GameObject` in your scene.
+One of the nice things about the UnityAdsHelper script is that it can be initialized by calling the `Initialize()` method from one of your game scripts, or simply by adding it as a component to a GameObject in your scene.
 
 For the purposes of this example, let's initialize the UnityAdsHelper with our UnityAdsExample script.
 
@@ -76,7 +76,7 @@ public class UnityAdsExample : MonoBehaviour
 
 public class UnityAdsExample extends MonoBehaviour
 {
-	function Start : void ()
+	function Start () : void
 	{
 		UnityAdsHelper.Initialize();
 	}
