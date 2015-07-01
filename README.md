@@ -42,7 +42,7 @@ Configure Unity Ads for your project:
 2. Enter your **iOS Game ID** and **Android Game ID** in the fields provided.  
 
 #### Developing with JavaScript? 
-Move the **UnityAdsHelper** directory into **Standard Assets**.
+Move the **UnityAdsHelper** directory into the **Standard Assets** directory.
 
 ## Using UnityAdsHelper
 
