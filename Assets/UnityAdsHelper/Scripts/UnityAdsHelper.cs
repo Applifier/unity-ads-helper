@@ -5,13 +5,31 @@ using System.Collections;
 using UnityEngine.Advertisements;
 #endif
 
+/// <summary>
+/// Unity Ads Helper. Making integration in Unity a breeze!
+/// </summary>
 public class UnityAdsHelper : MonoBehaviour 
 {
+	/// <summary>
+	/// Called when an ad is hidden. The ad was shown without being skipped. 
+	/// Use this event for rewarding users.
+	/// </summary>
 	public static Action onFinishedEvent;
+	/// <summary>
+	/// Called when an ad is hidden. The ad was skipped while being shown. 
+	/// Users should not be rewarded.
+	/// </summary>
 	public static Action onSkippedEvent;
+	/// <summary>
+	/// Called when an error occurs while attempting to show an ad.
+	/// </summary>
 	public static Action onFailedEvent;
 
 	private static string _gamerSID;
+	/// <summary>
+	/// Sets the gamer SID parameter, a unique identifier used with Server-to-Server Redeem Callbacks.
+	/// </summary>
+	/// <param name="gamerSID">Gamer SID.</param>
 	public static void SetGamerSID (string gamerSID)
 	{
 		_gamerSID = string.IsNullOrEmpty(gamerSID) ? null : gamerSID;
@@ -39,17 +57,23 @@ public class UnityAdsHelper : MonoBehaviour
 	{
 		if (_instance == null) _instance = this;
 		else if (_instance != this) Destroy(gameObject);
+
+		DontDestroyOnLoad(gameObject);
 	}
 	
+	/// <summary>
+	/// Initializes the Unity Ads SDK with <see cref="UnityAdsSettings"/>. 
+	/// To configure settings, go to Edit > Unity Ads Settings in the Unity Editor menu.
+	/// </summary>
 	public static void Initialize () 
 	{ 
 		if (_isInitializing) return;
-		
+
 		UnityAdsHelper instance = GetInstance();
-		if (instance != null) instance.OnInitialize();
+		if (instance != null) instance.DoInitialize();
 	}
 	
-	private void OnInitialize ()
+	private void DoInitialize ()
 	{
 		_isInitializing = true;
 
@@ -71,7 +95,9 @@ public class UnityAdsHelper : MonoBehaviour
 	#elif UNITY_ANDROID
 		gameId = settings.androidGameId;
 	#endif
-		
+
+		gameId = gameId.Trim();
+
 		if (!Advertisement.isSupported)
 		{
 			Debug.LogWarning("Unity Ads is not supported on the current runtime platform.");
@@ -119,23 +145,56 @@ public class UnityAdsHelper : MonoBehaviour
 		_isInitializing = false;
 		yield break;
 	}
-	
+
+	/// <summary>
+	/// Gets a value indicating whether an ad is currently showing.
+	/// </summary>
+	/// <value><c>true</c> if is showing; otherwise, <c>false</c>.</value>
 	public static bool isShowing { get { return Advertisement.isShowing; }}
+	/// <summary>
+	/// Gets a value indicating whether Unity Ads is supported in the current Unity player. 
+	/// Supported players include iOS, Android, and the Unity Editor.
+	/// </summary>
+	/// <value><c>true</c> if is supported; otherwise, <c>false</c>.</value>
 	public static bool isSupported { get { return Advertisement.isSupported; }}
+	/// <summary>
+	/// Gets a value indicating whether Unity Ads is initialized.
+	/// </summary>
+	/// <value><c>true</c> if is initialized; otherwise, <c>false</c>.</value>
 	public static bool isInitialized { get { return Advertisement.isInitialized; }}
 	
+	/// <summary>
+	/// Determines if Unity Ads is initialized and ready to show an ad using the default ad placement zone.
+	/// </summary>
+	/// <returns><c>true</c> if is ready; otherwise, <c>false</c>.</returns>
 	public static bool IsReady () { return IsReady(null); }
-	public static bool IsReady (string zoneID) 
+	/// <summary>
+	/// Determines if Unity Ads is initialized and ready to show an ad for the specified ad placement zone ID.
+	/// To use the default ad placement zone, pass in a <c>null</c> value for the zone ID.
+	/// </summary>
+	/// <returns><c>true</c> if is ready; otherwise, <c>false</c>.</returns>
+	/// <param name="zoneId">Ad placment zone ID.</param>
+	public static bool IsReady (string zoneId) 
 	{
-		if (string.IsNullOrEmpty(zoneID)) zoneID = null;
+		if (string.IsNullOrEmpty(zoneId)) zoneId = null;
+		else zoneId = zoneId.Trim();
 		
-		return Advertisement.IsReady(zoneID);
+		return Advertisement.IsReady(zoneId);
 	}
 
+	/// <summary>
+	/// Shows an ad using the default ad placement zone.
+	/// </summary>
 	public static void ShowAd () { ShowAd(null); }
+	/// <summary>
+	/// Shows an ad using the specified ad placement zone ID.
+	/// To use the default ad placement zone, pass in a <c>null</c> value for the zone ID.
+	/// </summary>
+	/// <param name="zoneId">Ad placement zone ID.</param>
 	public static void ShowAd (string zoneId)
 	{
 		if (string.IsNullOrEmpty(zoneId)) zoneId = null;
+		else zoneId = zoneId.Trim();
 		
 		if (Advertisement.IsReady(zoneId))
 		{
@@ -171,6 +230,15 @@ public class UnityAdsHelper : MonoBehaviour
 			if (onFailedEvent != null) onFailedEvent();
 			break;
 		}
+
+		ClearEvents();
+	}
+
+	private static void ClearEvents ()
+	{
+		onFinishedEvent = null;
+		onSkippedEvent = null;
+		onFailedEvent = null;
 	}
 	
 #else
@@ -185,10 +253,10 @@ public class UnityAdsHelper : MonoBehaviour
 	public static bool isInitialized { get { return false; }}
 	
 	public static bool IsReady () { return false; }
-	public static bool IsReady (string zoneID) { return false; }
+	public static bool IsReady (string zoneId) { return false; }
 	
 	public static void ShowAd () { ShowAd(null); }
-	public static void ShowAd (string zoneID) 
+	public static void ShowAd (string zoneId) 
 	{
 		Debug.LogError("Failed to show ad. Unity Ads does not support the current build platform.");
 	}
