@@ -91,7 +91,7 @@ Ideally, you should only initialize the UnityAdsHelper once when your game first
 > 
 > For instance, if you've designed your game to delay the showing of ads until after the user has had time to learn the rules of gameplay and progress through a few levels, it may take a few game sessions before they reach a point where they would start seeing ads. 
 > 
-> In this case, you can hold off on initializing Unity Ads until they've crossed this threshold. Keep in mind though, Unity Ads does take several seconds to initialize and cache the assets neccessary to show an ad. You should therefore allow sufficient time for Unity Ads to finish initializing before showing an ad.
+> In this case, you could hold off on initializing Unity Ads until they've crossed this threshold. Keep in mind though, Unity Ads does take several seconds to initialize and cache the assets neccessary to show an ad. You should therefore allow sufficient time for Unity Ads to finish initializing before showing an ad.
 
 ### Creating a Unity UI Button
 
