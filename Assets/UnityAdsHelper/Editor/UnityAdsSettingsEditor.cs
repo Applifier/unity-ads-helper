@@ -59,7 +59,7 @@ public class UnityAdsSettingsEditor : Editor
 		{
 			_msgTypeGameIds = MessageType.Warning;
 		}
-		else if (string.IsNullOrEmpty(settings.iosGameId))
+		else if (string.IsNullOrEmpty(settings.iosGameId.Trim()))
 		{
 			_msgTypeGameIds = MessageType.Error;
 		} 
@@ -68,7 +68,7 @@ public class UnityAdsSettingsEditor : Editor
 		{
 			_msgTypeGameIds = MessageType.Warning;
 		}
-		else if (string.IsNullOrEmpty(settings.androidGameId))
+		else if (string.IsNullOrEmpty(settings.androidGameId.Trim()))
 		{
 			_msgTypeGameIds = MessageType.Error;
 		} 

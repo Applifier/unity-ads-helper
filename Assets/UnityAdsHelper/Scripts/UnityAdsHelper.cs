@@ -32,7 +32,7 @@ public class UnityAdsHelper : MonoBehaviour
 	/// <param name="gamerSID">Gamer SID.</param>
 	public static void SetGamerSID (string gamerSID)
 	{
-		_gamerSID = string.IsNullOrEmpty(gamerSID) ? null : gamerSID;
+		_gamerSID = string.IsNullOrEmpty(gamerSID) ? null : gamerSID.Trim();
 	}
 
 #if UNITY_IOS || UNITY_ANDROID
@@ -91,24 +91,22 @@ public class UnityAdsHelper : MonoBehaviour
 		string gameId = null;
 		
 	#if UNITY_IOS
-		gameId = settings.iosGameId;
+		gameId = settings.iosGameId.Trim();
 	#elif UNITY_ANDROID
-		gameId = settings.androidGameId;
+		gameId = settings.androidGameId.Trim();
 	#endif
 
-		gameId = gameId.Trim();
-
-		if (!Advertisement.isSupported)
+		if (string.IsNullOrEmpty(gameId))
+		{
+			Debug.LogError("The game ID value is not set. A valid game ID is required to initialize Unity Ads.");
+		}
+		else if (!Advertisement.isSupported)
 		{
 			Debug.LogWarning("Unity Ads is not supported on the current runtime platform.");
 		}
 		else if (Advertisement.isInitialized)
 		{
 			Debug.LogWarning("Unity Ads is already initialized.");
-		}
-		else if (string.IsNullOrEmpty(gameId))
-		{
-			Debug.LogError("The game ID value is not set. A valid game ID is required to initialize Unity Ads.");
 		}
 		else
 		{
@@ -176,9 +174,8 @@ public class UnityAdsHelper : MonoBehaviour
 	/// <param name="zoneId">Ad placment zone ID.</param>
 	public static bool IsReady (string zoneId) 
 	{
-		if (string.IsNullOrEmpty(zoneId)) zoneId = null;
-		else zoneId = zoneId.Trim();
-		
+		zoneId = string.IsNullOrEmpty(zoneId) ? null : zoneId.Trim();
+
 		return Advertisement.IsReady(zoneId);
 	}
 
@@ -193,9 +190,8 @@ public class UnityAdsHelper : MonoBehaviour
 	/// <param name="zoneId">Ad placement zone ID.</param>
 	public static void ShowAd (string zoneId)
 	{
-		if (string.IsNullOrEmpty(zoneId)) zoneId = null;
-		else zoneId = zoneId.Trim();
-		
+		zoneId = string.IsNullOrEmpty(zoneId) ? null : zoneId.Trim();
+
 		if (Advertisement.IsReady(zoneId))
 		{
 			Debug.Log("Showing ad now...");
