@@ -19,7 +19,7 @@ Features include:
 
 **Step 1:** Download and import the [UnityAdsHelper.unitypackage](UnityAdsHelper.unitypackage?raw=true) into your Unity project.
 
-_**Note:** This project does not include Unity Ads. Download and import [the latest version from the Asset Store](https://www.assetstore.unity3d.com/en/#!/content/21027)._
+> _**Note:** This project does not include Unity Ads. Download and import [the latest version from the Asset Store](https://www.assetstore.unity3d.com/en/#!/content/21027)._
 
 **Step 2:** Set the **Platform** to either **iOS** or **Android**:
 
