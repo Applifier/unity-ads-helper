@@ -3,13 +3,13 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 
 Features include:  
 * Unity Ads settings are stored as a ScriptableObject available from the Unity Editor menu.  
-* A robust `Initialize` method that applies settings and logs when Unity Ads is initialized.  
-* A robust `ShowAd` method that applies options and handles and result callbacks.  
+* A robust `Initialize()` method that applies settings and logs when Unity Ads is initialized.  
+* A robust `ShowAd()` method that applies options and handles and result callbacks.  
 * Events for handling show results:  
   * `onFinishedEvent`  
   * `onSkippedEvent`  
   * `onFailedEvent`  
-* A `SetGamerSID` method for integrations using Server-to-Server Redeem Callbacks.  
+* A `SetGamerSID()` method for integrations using Server-to-Server Redeem Callbacks.  
 * Error handling for common integration issues:  
   * Game IDs are trimmed of spaces and checked for `null` or empty values.  
   * Zone IDs are trimmed of spaces and set to `null` if emtpy.  
@@ -136,6 +136,11 @@ class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/M
   `public static void Initialize ();`  
 
   Configures and initializes Unity Ads using an instance of `UnityAdsSettings`. To configure Unity Ads settings, select **Edit > Unity Ads Settings** from the Unity Editor menu.
+
+* ##### SetGamerSID  
+  `public static void SetGamerSID (string gamerSID);`
+  
+  Sets the gamer SID parameter, a unique identifier used with Server-to-Server Redeem Callbacks.
 
 * ##### IsReady
   `public static bool IsReady ();`  
