@@ -17,26 +17,22 @@ Features include:
 
 ## Getting Started
 
-#### Step 1
-Download and import the [UnityAdsHelper.unitypackage](UnityAdsHelper.unitypackage?raw=true) into your Unity project.
+**Step 1:** Download and import the [UnityAdsHelper.unitypackage](UnityAdsHelper.unitypackage?raw=true) into your Unity project.
 
 _**Note:** This project does not include Unity Ads. Download and import [the latest version from the Asset Store](https://www.assetstore.unity3d.com/en/#!/content/21027)._
 
-#### Step 2
-Set the **Platform** to either **iOS** or **Android**:
+**Step 2:** Set the **Platform** to either **iOS** or **Android**:
 
 1. Select **File > Build Settings...** from the Unity Editor menu.  
 2. Select **iOS** or **Android** from the **Platform** list.
 3. Select **Switch Platform**.
 
-#### Step 3
-Enable **Development Build** to allow the use of **Test Mode** with Unity Ads:
+**Step 3:** Enable **Development Build** to allow use of **Test Mode** with Unity Ads:
 
 1. Select **File > Build Settings...** from the Unity Editor menu.  
 2. Mark the check box next to **Development Build** to enable.
 
-#### Step 4
-Configure Unity Ads for your project:
+**Step 4:** Configure Unity Ads for your project:
 
 1. Select **Edit > Unity Ads Settings** from the Unity Editor menu.  
 2. Enter your **iOS Game ID** and **Android Game ID** in the fields provided.  
