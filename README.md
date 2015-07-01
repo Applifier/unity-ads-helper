@@ -97,6 +97,7 @@ Ideally, you should only initialize the UnityAdsHelper once when your game first
 
 ### Using a Unity UI Button to Show Ads
 
+----
 ## Unity Ads Demo
 
 Included with this project is a [UnityAdsDemo.scene](Assets/UnityAdsHelper/Demo/UnityAdsDemo.scene) and the following demo scripts:  
@@ -106,60 +107,61 @@ Included with this project is a [UnityAdsDemo.scene](Assets/UnityAdsHelper/Demo/
 
 Look them over. Try them out. And feel free to modify them for use in your own project.
 
+----
 ## Scripting API
 
-### UnityAdsHelper
+#### UnityAdsHelper 
 class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/MonoBehaviour.html)
 
-#### Static Properties
+### Static Properties
  
-> ##### UnityAdsHelper.isShowing
-> `public static bool isShowing { get; }`  
-> 
-> Gets a value indicating whether an ad is currently showing.
-> 
-> ##### UnityAdsHelper.isSupported
-> `public static bool isSupported { get; }`  
-> 
-> Gets a value indicating whether Unity Ads is supported in the current Unity player.
-> 
-> ##### UnityAdsHelper.isInitialized
-> `public static bool isInitialized { get; }`  
-> 
-> Gets a value indicating whether Unity Ads is initialized.
+#### UnityAdsHelper.isShowing
+`public static bool isShowing { get; }`  
 
-#### Static Functions
+Gets a value indicating whether an ad is currently showing.
+
+#### UnityAdsHelper.isSupported
+`public static bool isSupported { get; }`  
+
+Gets a value indicating whether Unity Ads is supported in the current Unity player.
+
+#### UnityAdsHelper.isInitialized
+`public static bool isInitialized { get; }`  
+
+Gets a value indicating whether Unity Ads is initialized.
+
+### Static Functions
  
-> ##### UnityAdsHelper.Initialize
-> `public static void Initialize ();`  
-> 
-> Configures and initializes Unity Ads using an instance of `UnityAdsSettings`. To configure Unity Ads settings, select **Edit > Unity Ads Settings** from the Unity Editor menu.
-> 
-> ##### UnityAdsHelper.IsReady
-> `public static bool IsReady ();`  
-> `public static bool IsReady (string zoneId);`  
-> 
-> Determines if Unity Ads is initialized and ready to show an ad using the specified `zoneId`. If the `zoneId` is not specified, or is set to `null`, the default ad placement zone will be used instead.
-> 
-> ##### UnityAdsHelper.ShowAd
-> `public static void ShowAd ();`  
-> `public static void ShowAd (string zoneId);`  
-> 
-> Shows an ad using the specified `zoneId`. If the `zoneId` is not specified, or is set to `null`, the default ad placement zone will be used instead.
+#### UnityAdsHelper.Initialize
+`public static void Initialize ();`  
 
-#### Static Events
+Configures and initializes Unity Ads using an instance of `UnityAdsSettings`. To configure Unity Ads settings, select **Edit > Unity Ads Settings** from the Unity Editor menu.
 
-> ##### UnityAdsHelper.onFinishedEvent
-> `public static Action onFinishedEvent;`  
->  
-> Called when an ad is hidden. The ad was shown without being skipped.
-> 
-> ##### UnityAdsHelper.onSkippedEvent
-> `public static Action onSkippedEvent;`  
-> 
-> Called when an ad is hidden. The ad was skipped while being shown.
-> 
-> ##### UnityAdsHelper.onFailedEvent
-> `public static Action onFailedEvent;`  
-> 
-> Called when an error occurs while attempting to show an ad.
+#### UnityAdsHelper.IsReady
+`public static bool IsReady ();`  
+`public static bool IsReady (string zoneId);`  
+
+Determines if Unity Ads is initialized and ready to show an ad using the specified `zoneId`. If the `zoneId` is not specified, or is set to `null`, the default ad placement zone will be used instead.
+
+#### UnityAdsHelper.ShowAd
+`public static void ShowAd ();`  
+`public static void ShowAd (string zoneId);`  
+
+Shows an ad using the specified `zoneId`. If the `zoneId` is not specified, or is set to `null`, the default ad placement zone will be used instead.
+
+### Static Events
+
+#### UnityAdsHelper.onFinishedEvent
+`public static Action onFinishedEvent;`  
+ 
+Called when an ad is hidden. The ad was shown without being skipped.
+
+#### UnityAdsHelper.onSkippedEvent
+`public static Action onSkippedEvent;`  
+
+Called when an ad is hidden. The ad was skipped while being shown.
+
+#### UnityAdsHelper.onFailedEvent
+`public static Action onFailedEvent;`  
+
+Called when an error occurs while attempting to show an ad.
