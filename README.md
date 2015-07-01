@@ -95,7 +95,11 @@ Ideally, you should only initialize the UnityAdsHelper once when your game first
 
 ### Creating a Unity UI Button
 
+[Placeholder]
+
 ### Using a Unity UI Button to Show Ads
+
+[Placeholder]
 
 ## Unity Ads Demo
 
