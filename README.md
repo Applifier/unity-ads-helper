@@ -101,7 +101,7 @@ Ideally, you should only initialize the UnityAdsHelper once when your game first
 
 [Placeholder]
 
-### Rewarding Players for Watching Ads
+### Rewarding Users for Watching Ads
 
 [Placeholder]
 
