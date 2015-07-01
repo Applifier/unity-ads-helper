@@ -27,7 +27,7 @@ Features include:
 2. Select **iOS** or **Android** from the **Platform** list.
 3. Select **Switch Platform**.
 
-**Step 3:** Enable **Development Build** to allow use of **Test Mode** with Unity Ads:
+**Step 3:** Enable **Development Build** to allow for the use of **Test Mode** with Unity Ads:
 
 1. Select **File > Build Settings...** from the Unity Editor menu.  
 2. Mark the check box next to **Development Build** to enable.
