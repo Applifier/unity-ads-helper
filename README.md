@@ -131,7 +131,7 @@ class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/M
 > 
 > Gets a value indicating whether Unity Ads is initialized.
 
-### Static Functions
+### Static Methods
  
 > ##### UnityAdsHelper.Initialize
 > `public static void Initialize ();`  
