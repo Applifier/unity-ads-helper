@@ -101,6 +101,10 @@ Ideally, you should only initialize the UnityAdsHelper once when your game first
 
 [Placeholder]
 
+### Rewarding Players for Watching Ads
+
+[Placeholder]
+
 ## Unity Ads Demo
 
 Included with this project is a [UnityAdsDemo.scene](Assets/UnityAdsHelper/Demo/UnityAdsDemo.scene) and the following demo scripts:
