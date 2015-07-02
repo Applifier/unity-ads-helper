@@ -28,6 +28,8 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
   * Zone IDs are trimmed of spaces and set to `null` if emtpy.  
   * JavaScript friendly methods.  
 
+[⇧ Back to top](#unity-ads-helper)
+
 ## Getting Started
 
 **Step 1:** Download and import the [UnityAdsHelper.unitypackage](UnityAdsHelper.unitypackage?raw=true) into your Unity project.
@@ -53,6 +55,8 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 #### Developing with JavaScript? 
 Move the **UnityAdsHelper** directory into the **Standard Assets** directory.
 
+[⇧ Back to top](#unity-ads-helper)
+
 ## Using UnityAdsHelper
 
 A simple Unity Ads integration can be summed up in just 3 steps:
@@ -62,6 +66,8 @@ A simple Unity Ads integration can be summed up in just 3 steps:
 3. Show the ad.  
 
 In this example, we'll show you how to initialize Unity Ads using the UnityAdsHelper script. Then we'll guide you through setting up a Unity UI Button that will show an ad using a method that utilizes the UnityAdsHelper script.
+
+[⇧ Back to top](#unity-ads-helper)
 
 ### Initializing the UnityAdsHelper
 
@@ -106,17 +112,26 @@ Ideally, you should only initialize the UnityAdsHelper once when your game first
 > 
 > In this case, you could hold off on initializing Unity Ads until they've crossed this threshold. Keep in mind though, Unity Ads does take several seconds to initialize and cache the assets neccessary to show an ad. You should therefore allow sufficient time for Unity Ads to finish initializing before showing an ad.
 
+[⇧ Back to top](#unity-ads-helper)
+
 ### Creating a Unity UI Button
 
 [Placeholder]
+
+[⇧ Back to top](#unity-ads-helper)
 
 ### Using a Unity UI Button to Show Ads
 
 [Placeholder]
 
+[⇧ Back to top](#unity-ads-helper)
+
+
 ### Rewarding Users for Watching Ads
 
 [Placeholder]
+
+[⇧ Back to top](#unity-ads-helper)
 
 ## Example Assets
 
@@ -127,6 +142,8 @@ Included with this project is a [UnityAdsDemo.scene](Assets/UnityAdsHelper/Demo/
 * [ShowAdOnLoad.cs](Assets/UnityAdsHelper/Demo/Scripts/ShowAdOnLoad.cs)
 
 Look them over. Try them out. And feel free to modify them for use in your own project.
+
+[⇧ Back to top](#unity-ads-helper)
 
 ## Scripting API
 
@@ -191,3 +208,5 @@ class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/M
   `public static Action onFailedEvent;`  
   
   Called when an error occurs while attempting to show an ad.
+
+[⇧ Back to top](#unity-ads-helper)
