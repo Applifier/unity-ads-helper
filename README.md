@@ -6,7 +6,7 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 * [Features](#features)
 * [Getting Started](#getting-started)
 * [Using UnityAdsHelper](#using-unityadshelper)
-  * [Initializing the UnityAdsHelper](#initializing-the-unityadshelper)
+  * [Initializing Unity Ads](#initializing-unity-ads)
   * [Creating a Unity UI Button](#creating-a-unity-ui-button)
   * [Using a Unity UI Button to Show Ads](#using-a-unity-ui-button-to-show-ads)
   * [Rewarding Users for Watching Ads](#rewarding-users-for-watching-ads)
@@ -69,11 +69,13 @@ In this example, we'll show you how to initialize Unity Ads using the UnityAdsHe
 
 [⇧ Back to top](#unity-ads-helper)
 
-### Initializing the UnityAdsHelper
+### Initializing Unity Ads
 
-One of the nice things about the UnityAdsHelper script is that it can be initialized by calling the `Initialize()` method from one of your game scripts, or simply by adding it as a component to a GameObject in your scene.
+The `UnityAdsHelper.Initialize()` method configures and initializes Unity Ads using the settings stored in a ScriptableObject called UnityAdsSettings. By default, the UnityAdsSettings asset can be found in the Resrouces directory. You can view UnityAdsSettings in the Inspector by selecting it directly, or by selecting **Edit > Unity Ads Settings** from the Unity Editor menu.
 
-For the purposes of this example, let's initialize the UnityAdsHelper with our UnityAdsExample script.
+One of the nice things about the UnityAdsHelper script is that it can be used to initialize Unity Ads in one of two ways: by calling the `UnityAdsHelper.Initialize()` method from a script within your project, or simply by adding it as a component to a GameObject in your main scene.
+
+For the purposes of this example, let's initialize Unity Ads by calling the `UnityAdsHelper.Initialize()` method.
 
 **UnityAdsExample.cs**  
 ```CSharp
