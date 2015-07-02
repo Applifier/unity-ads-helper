@@ -34,7 +34,7 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 
 **Step 1:** Download and import the [UnityAdsHelper.unitypackage](UnityAdsHelper.unitypackage?raw=true) into your Unity project.
 
-> _**Note:** Unity Ads is not included. Please download and import [the latest version from the Asset Store](https://www.assetstore.unity3d.com/en/#!/content/21027)._
+> _**Note:** Unity Ads assets are not included. Please download and import the latest version of the [Unity Ads asset package from the Asset Store](https://www.assetstore.unity3d.com/en/#!/content/21027)._
 
 **Step 2:** Set the **Platform** to either **iOS** or **Android**:
 
