@@ -69,16 +69,27 @@ public class UnityAdsHelper : MonoBehaviour
 	{ 
 		if (_isInitializing) return;
 
-		UnityAdsHelper instance = GetInstance();
-		if (instance != null) instance.DoInitialize();
+		if (isInitialized)
+		{
+			Debug.LogWarning("Unity Ads is already initialized.");
+		}
+		else if (!isSupported)
+		{
+			Debug.LogWarning("Unity Ads is not supported on the current runtime platform.");
+		}
+		else 
+		{
+			UnityAdsHelper instance = GetInstance();
+			if (instance != null) instance.DoInitialize();
+		}
 	}
 	
 	private void DoInitialize ()
 	{
 		_isInitializing = true;
 
-		Debug.Log("Running precheck for Unity Ads initialization...");
-		
+		Debug.Log("Preparing for Unity Ads initialization...");
+
 		UnityAdsSettings settings = (UnityAdsSettings)Resources.Load("UnityAdsSettings");
 
 		if (settings == null)
@@ -98,15 +109,7 @@ public class UnityAdsHelper : MonoBehaviour
 
 		if (string.IsNullOrEmpty(gameId))
 		{
-			Debug.LogError("The game ID value is not set. A valid game ID is required to initialize Unity Ads.");
-		}
-		else if (!Advertisement.isSupported)
-		{
-			Debug.LogWarning("Unity Ads is not supported on the current runtime platform.");
-		}
-		else if (Advertisement.isInitialized)
-		{
-			Debug.LogWarning("Unity Ads is already initialized.");
+			Debug.LogError("Failed to initialize Unity Ads. A valid game ID is required.");
 		}
 		else
 		{
@@ -119,11 +122,11 @@ public class UnityAdsHelper : MonoBehaviour
 			
 			if (settings.enableTestMode && !Debug.isDebugBuild)
 			{
-				Debug.LogWarning("Development Build must be enabled in Build Settings to enable test mode for Unity Ads.");
+				Debug.LogWarning("Development Build must be enabled in Build Settings to enable Test Mode for Unity Ads.");
 			}
 			
 			bool isTestModeEnabled = Debug.isDebugBuild && settings.enableTestMode;
-			Debug.Log(string.Format("Precheck done. Initializing Unity Ads for game ID {0} with test mode {1}...",
+			Debug.Log(string.Format("Initializing Unity Ads for game ID {0} with Test Mode {1}...",
 			                        gameId, isTestModeEnabled ? "enabled" : "disabled"));
 			
 			Advertisement.Initialize(gameId,isTestModeEnabled);
