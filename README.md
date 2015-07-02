@@ -6,10 +6,10 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 * [Features](#features)
 * [Getting Started](#getting-started)
 * [Using UnityAdsHelper](#using-unityadshelper)
-  * Initializing the UnityAdsHelper
-  * Creating a Unity UI Button
-  * Using a Unity UI Button to Show Ads
-  * Rewarding Users for Watching Ads
+  * [Initializing the UnityAdsHelper](#initializing-the-unityadshelper)
+  * [Creating a Unity UI Button](#creating-a-unity-ui-button)
+  * [Using a Unity UI Button to Show Ads](#using-a-unity-ui-button-to-show-ads)
+  * [Rewarding Users for Watching Ads](#rewarding-users-for-watching-ads)
 * [Example Assets](#example-assets)
 * [Scripting API](#scripting-api)
 
