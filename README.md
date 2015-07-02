@@ -71,7 +71,11 @@ In this example, we'll show you how to initialize Unity Ads using the UnityAdsHe
 
 ### Initializing Unity Ads
 
-The `UnityAdsHelper.Initialize()` method configures and initializes Unity Ads using the settings stored in a ScriptableObject called UnityAdsSettings. By default, the UnityAdsSettings asset can be found in the Resrouces directory. You can view UnityAdsSettings in the Inspector by selecting it directly, or by selecting **Edit > Unity Ads Settings** from the Unity Editor menu.
+The `UnityAdsHelper.Initialize()` method configures and initializes Unity Ads using the settings stored in a ScriptableObject called UnityAdsSettings. By default, the UnityAdsSettings asset can be found in the Resrouces directory. You can view UnityAdsSettings in the Inspector by selecting it directly, or by selecting **Edit > Unity Ads Settings** from the Unity Editor menu. Selecting this menu item will create the UnityAdsSettings asset if it doesn't already exist in your project.
+
+Test Mode is enabled by default in Unity Ads Settings. While developing and testing your game, you should always leave Test Mode enabled. The only time it's appropriate to disable Test Mode is in cases where you are attempting to test the functionality of production ad campaigns, instead of just test ad campaigns. 
+
+> _**Note:** Development Build must be enabled in Build Settings in order to initialize Unity Ads with Test Mode enabled. This is a feature of the UnityAdsHelper script, and is intended to help prevent from accidentally releasing a final build with Test Mode still enabled._
 
 One of the nice things about the UnityAdsHelper script is that it can be used to initialize Unity Ads in one of two ways: by calling the `UnityAdsHelper.Initialize()` method from a script within your project, or simply by adding it as a component to a GameObject in your main scene.
 
