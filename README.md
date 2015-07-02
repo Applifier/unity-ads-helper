@@ -104,7 +104,7 @@ public class UnityAdsExample extends MonoBehaviour
 }
 ```
 
-Ideally, you should only initialize the UnityAdsHelper once when your game first starts up. In any case, the UnityAdsHelper manages its own instances. There will only ever be one UnityAdsHelper at a time in your game. 
+The UnityAdsHelper should only be initialized once within your game, ideally when your game first starts up. In any case, the UnityAdsHelper is capable of managing its own instances, and persists across scene loads. So there will only ever be one UnityAdsHelper at a time in your game, and Unity Ads will only be initialized once. 
 
 > **Pro Tip: Designing for User Experience**
 > 
@@ -127,7 +127,6 @@ Ideally, you should only initialize the UnityAdsHelper once when your game first
 [Placeholder]
 
 [⇧ Back to top](#unity-ads-helper)
-
 
 ### Rewarding Users for Watching Ads
 
