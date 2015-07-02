@@ -1,7 +1,20 @@
 # Unity Ads Helper
 The Unity Ads Helper is designed to streamline the integration of Unity Ads in Unity projects.
 
-Features include:  
+## Outline
+
+* [Features](#features)
+* [Getting Started](#getting-started)
+* [Using UnityAdsHelper](#using-unityadshelper)
+  * Initializing the UnityAdsHelper
+  * Creating a Unity UI Button
+  * Using a Unity UI Button to Show Ads
+  * Rewarding Users for Watching Ads
+* [Example Assets](#example-assets)
+* [Scripting API](#scripting-api)
+
+## Features
+
 * Unity Ads settings are stored as a ScriptableObject available from the Unity Editor menu.  
 * A robust `Initialize()` method that applies settings and logs when Unity Ads is initialized.  
 * A robust `ShowAd()` method that applies options and handles and result callbacks.  
@@ -105,7 +118,7 @@ Ideally, you should only initialize the UnityAdsHelper once when your game first
 
 [Placeholder]
 
-## Unity Ads Demo
+## Example Assets
 
 Included with this project is a [UnityAdsDemo.scene](Assets/UnityAdsHelper/Demo/UnityAdsDemo.scene) and the following demo scripts:
 
