@@ -145,6 +145,8 @@ The UnityAdsHelper should only be initialized once within your game, ideally whe
 
 ## Example Assets
 
+![Example Assets](images/example-assets-banner.png)
+
 Included with this project is an [Examples](Assets/UnityAdsHelper/Examples/) folder that includes the following assets:
 
 * UnityAdsExample.unity - Example scene file.  
