@@ -1,6 +1,8 @@
 # Unity Ads Helper
 The Unity Ads Helper is designed to streamline the integration of Unity Ads in Unity projects.
 
+![Unity Ads Settings](images/unity-ads-settings.png)
+
 ## Outline
 
 * [Features](#features)
@@ -52,7 +54,7 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 1. Select **Edit > Unity Ads Settings** from the Unity Editor menu.  
 2. Enter your **iOS Game ID** and **Android Game ID** in the fields provided.  
 
-#### Developing with JavaScript? 
+#### Developing with JavaScript?
 Move the **UnityAdsHelper** directory into the **Standard Assets** directory.
 
 [⇧ Back to top](#unity-ads-helper)
@@ -73,7 +75,7 @@ In this example, we'll show you how to initialize Unity Ads using the UnityAdsHe
 
 The `UnityAdsHelper.Initialize()` method configures and initializes Unity Ads using the settings stored in a ScriptableObject called UnityAdsSettings. By default, the UnityAdsSettings asset can be found in the Resrouces directory. You can view UnityAdsSettings in the Inspector by selecting it directly, or by selecting **Edit > Unity Ads Settings** from the Unity Editor menu. Selecting this menu item will create the UnityAdsSettings asset if it doesn't already exist in your project.
 
-Test Mode is enabled by default in Unity Ads Settings. While developing and testing your game, you should always leave Test Mode enabled. The only time it's appropriate to disable Test Mode is in cases where you are attempting to test the functionality of production ad campaigns, instead of just test ad campaigns. 
+Test Mode is enabled by default in Unity Ads Settings. While developing and testing your game, you should always leave Test Mode enabled. The only time it's appropriate to disable Test Mode is in cases where you are attempting to test the functionality of production ad campaigns, instead of just test ad campaigns.
 
 > _**Note:** Development Build must be enabled in Build Settings in order to initialize Unity Ads with Test Mode enabled. This is a feature of the UnityAdsHelper script, and is intended to help prevent from accidentally releasing a final build with Test Mode still enabled._
 
@@ -82,11 +84,11 @@ One of the nice things about the UnityAdsHelper script is that it can be used to
 For the purposes of this example, let's initialize Unity Ads by calling `UnityAdsHelper.Initialize()`.
 
 **UnityAdsExample.cs**  
-```CSharp
+```csharp
 using UnityEngine;
 using System.Collections;
 
-public class UnityAdsExample : MonoBehaviour 
+public class UnityAdsExample : MonoBehaviour
 {
 	void Start ()
 	{
@@ -96,7 +98,7 @@ public class UnityAdsExample : MonoBehaviour
 ```
 
 **UnityAdsExample.js**  
-```JavaScript
+```javascript
 #pragma strict
 
 public class UnityAdsExample extends MonoBehaviour
@@ -108,14 +110,14 @@ public class UnityAdsExample extends MonoBehaviour
 }
 ```
 
-The UnityAdsHelper should only be initialized once within your game, ideally when your game first starts up. In any case, the UnityAdsHelper is capable of managing its own instances, and persists across scene loads. So there will only ever be one UnityAdsHelper at a time in your game, and Unity Ads will only be initialized once. 
+The UnityAdsHelper should only be initialized once within your game, ideally when your game first starts up. In any case, the UnityAdsHelper is capable of managing its own instances, and persists across scene loads. So there will only ever be one UnityAdsHelper at a time in your game, and Unity Ads will only be initialized once.
 
 > **Pro Tip: Designing for User Experience**
-> 
-> One thing to consider when designing your game with Unity Ads is that you don't always have to initialize Unity Ads at the start of your game. 
-> 
-> For instance, if you've designed your game to delay the showing of ads until after the user has had time to learn the rules of gameplay and progress through a few levels, it may take a few game sessions before they reach a point where they would start seeing ads. 
-> 
+>
+> One thing to consider when designing your game with Unity Ads is that you don't always have to initialize Unity Ads at the start of your game.
+>
+> For instance, if you've designed your game to delay the showing of ads until after the user has had time to learn the rules of gameplay and progress through a few levels, it may take a few game sessions before they reach a point where they would start seeing ads.
+>
 > In this case, you could hold off on initializing Unity Ads until they've crossed this threshold. Keep in mind though, Unity Ads does take several seconds to initialize and cache the assets neccessary to show an ad. You should therefore allow sufficient time for Unity Ads to finish initializing before showing an ad.
 
 [⇧ Back to top](#unity-ads-helper)
@@ -157,24 +159,24 @@ Look them over. Try them out. And feel free to modify them for use in your own p
 class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/MonoBehaviour.html)
 
 #### Static Properties
- 
+
 * ##### isShowing
   `public static bool isShowing { get; }`  
-  
+
   Gets a value indicating whether an ad is currently showing.
 
 * ##### isSupported
   `public static bool isSupported { get; }`  
-  
+
   Gets a value indicating whether Unity Ads is supported in the current Unity player.
 
 * ##### isInitialized
   `public static bool isInitialized { get; }`  
-    
+
   Gets a value indicating whether Unity Ads is initialized.
 
 #### Static Methods
- 
+
 * ##### Initialize
   `public static void Initialize ();`  
 
@@ -182,7 +184,7 @@ class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/M
 
 * ##### SetGamerSID  
   `public static void SetGamerSID (string gamerSID);`
-  
+
   Sets the gamer SID parameter, a unique identifier used with Server-to-Server Redeem Callbacks.
 
 * ##### IsReady
@@ -201,17 +203,17 @@ class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/M
 
 * ##### onFinishedEvent
   `public static Action onFinishedEvent;`  
-   
+
   Called when an ad is hidden. The ad was shown without being skipped.
 
 * ##### onSkippedEvent
   `public static Action onSkippedEvent;`  
-    
+
   Called when an ad is hidden. The ad was skipped while being shown.
-  
+
 * ##### onFailedEvent
   `public static Action onFailedEvent;`  
-  
+
   Called when an error occurs while attempting to show an ad.
 
 [⇧ Back to top](#unity-ads-helper)
