@@ -147,10 +147,10 @@ The UnityAdsHelper should only be initialized once within your game, ideally whe
 
 Included with this project is an [Examples](Assets/UnityAdsHelper/Examples/) folder that includes the following assets:
 
-* [UnityAdsExample.unity]() - Example scene file.  
-* [UnityAdsExample.cs](Assets/UnityAdsHelper/Demo/Scripts/UnityAdsDemo.cs) - Main example script.  
-* [UnityAdsButton.cs](Assets/UnityAdsHelper/Demo/Scripts/UnityAdsButton.cs) - Unity UI Button example script.  
-* [ShowAdOnLoad.cs](Assets/UnityAdsHelper/Demo/Scripts/ShowAdOnLoad.cs) - Script for showing an ad when the scene loads.  
+* UnityAdsExample.unity - Example scene file.  
+* [UnityAdsExample.cs](Assets/UnityAdsHelper/Examples/Scripts/UnityAdsExample.cs) - Main example script.  
+* [ButtonExample.cs](Assets/UnityAdsHelper/Examples/Scripts/ButtonExample.cs) - Unity UI Button example script.  
+* [ShowAdOnLoad.cs](Assets/UnityAdsHelper/Examples/Scripts/ShowAdOnLoad.cs) - Script for showing an ad when the scene loads.  
 
 These assets are reusable. Feel free to modify them for use in your own project.
 
