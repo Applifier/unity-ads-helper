@@ -70,15 +70,15 @@ A simple Unity Ads integration can be summed up in just 3 steps:
 2. Determine if an ad is ready.  
 3. Show the ad.  
 
-In this example, we'll show you how to initialize Unity Ads using the UnityAdsHelper script. Then we'll guide you through setting up a Unity UI Button that will show an ad using a method that utilizes the UnityAdsHelper script.
+In this example, we'll show you how to initialize Unity Ads using the [UnityAdsHelper](Assets/UnityAdsHelper/Scripts/UnityAdsHelper.cs) script. Then we'll guide you through setting up a Unity UI Button that will show an ad using a method that utilizes the UnityAdsHelper script.
 
 [⇧ Back to top](#unity-ads-helper)
 
 ### Initializing Unity Ads
 
-The `UnityAdsHelper.Initialize()` method configures and initializes Unity Ads using the settings stored in a ScriptableObject called UnityAdsSettings. By default, the UnityAdsSettings asset can be found in the Resrouces directory. You can view UnityAdsSettings in the Inspector by selecting it directly, or by selecting **Edit > Unity Ads Settings** from the Unity Editor menu. Selecting this menu item will create the UnityAdsSettings asset if it doesn't already exist in your project.
+The `UnityAdsHelper.Initialize()` method configures and initializes Unity Ads using the settings stored in a ScriptableObject called [UnityAdsSettings](Assets/UnityAdsHelper/Scripts/UnityAdsSettings.cs). By default, the UnityAdsSettings asset can be found in the Resrouces directory. You can view the UnityAdsSettings asset in the Inspector by selecting it directly, or by selecting **Edit > Unity Ads Settings** from the Unity Editor menu. Selecting this menu item will create the UnityAdsSettings asset if it does not already exist in your project.
 
-Test Mode is enabled by default in Unity Ads Settings. While developing and testing your game, you should always leave Test Mode enabled. The only time it's appropriate to disable Test Mode is in cases where you are attempting to test the functionality of production ad campaigns, instead of just test ad campaigns.
+The Test Mode option is enabled by default in Unity Ads Settings. While developing and testing your game, you should always leave Test Mode enabled. The only time it's appropriate to disable Test Mode is in cases where you are attempting to test the functionality of production ad campaigns, instead of just test ad campaigns.
 
 > _**Note:** Development Build must be enabled in Build Settings in order to initialize Unity Ads with Test Mode enabled. This is a feature of the UnityAdsHelper script, and is intended to help prevent from accidentally releasing a final build with Test Mode still enabled._
 
