@@ -91,12 +91,11 @@ public class ButtonExample : MonoBehaviour
 	{
 		_rewardCooldownTime = dateTime;
 		PlayerPrefs.SetString(_keyCooldownTime,dateTime.ToString());
-		Debug.Log(_keyCooldownTime);
 	}
 	
 	private void ResetCooldownTime ()
 	{
-		Debug.Log(string.Format("Cooldown time reset for: {0} ({1})",name,gameObject.GetInstanceID().ToString()));
+		Debug.Log("Cooldown time reset for: " + name);
 		SetCooldownTime(DateTime.UtcNow);
 	}
 }
