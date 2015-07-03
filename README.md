@@ -88,6 +88,8 @@ The Test Mode option is enabled by default in Unity Ads Settings. While developi
 
 > _**Note:** Development Build must be enabled in Build Settings in order to initialize Unity Ads with Test Mode enabled. This is a feature of the UnityAdsHelper script, and is intended to help prevent from accidentally releasing a final build with Test Mode still enabled._
 
+![Example Screenshots](images/example-screenshots.png)
+
 One of the nice things about the UnityAdsHelper script is that it can be used to initialize Unity Ads in one of two ways: by calling the `UnityAdsHelper.Initialize()` method from a script within your project, or simply by adding it as a component to a new GameObject in your main scene.
 
 For the purposes of this example, let's initialize Unity Ads by calling `UnityAdsHelper.Initialize()`.
