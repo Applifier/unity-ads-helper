@@ -1,8 +1,6 @@
 # Unity Ads Helper
 The Unity Ads Helper is designed to streamline the integration of Unity Ads in Unity projects.
 
-![Unity Ads Settings](images/unity-ads-settings.png)
-
 ## Outline
 
 * [Features](#features)
@@ -48,6 +46,8 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 2. Select **iOS** or **Android** from the **Platform** list.
 3. Select **Switch Platform**.
 
+![Build Settings](images/build-settings.png)
+
 **Step 3:** Enable **Development Build** to allow for the use of **Test Mode** with Unity Ads:
 
 1. Select **File > Build Settings...** from the Unity Editor menu.  
@@ -57,6 +57,8 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 
 1. Select **Edit > Unity Ads Settings** from the Unity Editor menu.  
 2. Enter your **iOS Game ID** and **Android Game ID** in the fields provided.  
+
+![Unity Ads Settings](images/unity-ads-settings.png)
 
 #### Developing with JavaScript?
 Move the **UnityAdsHelper** directory into the **Standard Assets** directory.
@@ -76,6 +78,8 @@ In this example, we'll show you how to initialize Unity Ads using the [UnityAdsH
 [⇧ Back to top](#unity-ads-helper)
 
 ### Initializing Unity Ads
+
+![Unity Ads Settings Menu Item](images/menu-item-banner.png)
 
 The `UnityAdsHelper.Initialize()` method configures and initializes Unity Ads using the settings stored in a ScriptableObject called [UnityAdsSettings](Assets/UnityAdsHelper/Scripts/UnityAdsSettings.cs). By default, the UnityAdsSettings asset can be found in the Resrouces directory. You can view the UnityAdsSettings asset in the Inspector by selecting it directly, or by selecting **Edit > Unity Ads Settings** from the Unity Editor menu. Selecting this menu item will create the UnityAdsSettings asset if it does not already exist in your project.
 
