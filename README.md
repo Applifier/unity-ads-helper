@@ -19,16 +19,19 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 
 * Unity Ads settings are stored as a ScriptableObject available from the Unity Editor menu.  
 * A robust `Initialize()` method that applies settings and logs when Unity Ads is initialized.  
-* A robust `ShowAd()` method that applies options and handles and result callbacks.  
+* A robust `ShowAd()` method that applies options and handles the result callback.  
 * Events for handling show results:  
   * `onFinishedEvent`  
   * `onSkippedEvent`  
   * `onFailedEvent`  
 * A `SetGamerSID()` method for integrations using Server-to-Server Redeem Callbacks.  
-* Error handling for common integration issues:  
+* Improved handling of common integration issues:  
+  * Unity Ads is only initialized once per game session.  
+  * Test Mode is tied to the Development Build option in Build Settings to prevent from accidentally shipping a game with test mode still enabled.  
   * Game IDs are trimmed of spaces and checked for `null` or empty values.  
-  * Zone IDs are trimmed of spaces and set to `null` if emtpy.  
+  * Zone IDs are trimmed of spaces and set to `null` if empty.  
   * JavaScript friendly methods.  
+* Example assets you can reuse in your own project.  
 
 [⇧ Back to top](#unity-ads-helper)
 
