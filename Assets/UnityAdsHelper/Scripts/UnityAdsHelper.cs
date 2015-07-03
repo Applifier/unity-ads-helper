@@ -1,4 +1,8 @@
-﻿using System;
+﻿#if UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
+#define UNITY_ADS_SDK
+#endif
+
+using System;
 using UnityEngine;
 using System.Collections;
 #if UNITY_IOS || UNITY_ANDROID
@@ -25,14 +29,22 @@ public class UnityAdsHelper : MonoBehaviour
 	/// </summary>
 	public static Action onFailedEvent;
 
+#pragma warning disable 0414
 	private static string _gamerSID;
+#pragma warning restore 0414
 	/// <summary>
-	/// Sets the gamer SID parameter, a unique identifier used with Server-to-Server Redeem Callbacks.
+	/// Gets the gamerSID, a unique identifier used with Server-to-Server Redeem Callbacks.
+	/// </summary>
+	/// <value>The gamerSID.</value>
+	public static string gamerSID { get { return _gamerSID; }}
+	/// <summary>
+	/// Sets the gamerSID parameter, a unique identifier used with Server-to-Server Redeem Callbacks.
 	/// </summary>
 	/// <param name="gamerSID">Gamer SID.</param>
 	public static void SetGamerSID (string gamerSID)
 	{
-		_gamerSID = string.IsNullOrEmpty(gamerSID) ? null : gamerSID.Trim();
+		gamerSID = gamerSID.Trim();
+		_gamerSID = string.IsNullOrEmpty(gamerSID) ? null : gamerSID;
 	}
 
 #if UNITY_IOS || UNITY_ANDROID
@@ -48,7 +60,7 @@ public class UnityAdsHelper : MonoBehaviour
 			if (gO == null) gO = new GameObject("UnityAdsHelper");
 
 			_instance = gO.GetComponent<UnityAdsHelper>();
-			if (_instance == null) gO.AddComponent<UnityAdsHelper>();
+			if (_instance == null) _instance = gO.AddComponent<UnityAdsHelper>();
 		}
 		return _instance;
 	}
@@ -56,38 +68,62 @@ public class UnityAdsHelper : MonoBehaviour
 	void Awake ()
 	{
 		if (_instance == null) _instance = this;
-		else if (_instance != this) Destroy(gameObject);
+		else if (_instance != this)
+		{
+			Debug.LogWarning("An instance of UnityAdsHelper already exists. Duplicate will be destroyed.");
+			Destroy(this);
+		}
+
+		if (!isInitialized && !_isInitializing) Initialize();
 
 		DontDestroyOnLoad(gameObject);
 	}
-	
+
 	/// <summary>
 	/// Initializes the Unity Ads SDK with <see cref="UnityAdsSettings"/>. 
 	/// To configure settings, go to Edit > Unity Ads Settings in the Unity Editor menu.
 	/// </summary>
 	public static void Initialize () 
 	{ 
-		if (_isInitializing) return;
+	#if UNITY_ADS_SDK
+		if (_isInitializing)
+		{
+			Debug.LogWarning("Unity Ads is already being initialized.");
+			return;
+		}
+		else _isInitializing = true;
 
 		if (isInitialized)
 		{
 			Debug.LogWarning("Unity Ads is already initialized.");
+			_isInitializing = false;
+			return;
 		}
 		else if (!isSupported)
 		{
 			Debug.LogWarning("Unity Ads is not supported on the current runtime platform.");
+			_isInitializing = false;
+			return;
 		}
-		else 
+		else if (GetInstance() == null)
 		{
-			UnityAdsHelper instance = GetInstance();
-			if (instance != null) instance.DoInitialize();
+			Debug.LogError("Failed to initialize the UnityAdsHelper. Instance not found.");
+			_isInitializing = false;
+			return;
 		}
+		else _instance.DoInitialize();
+
+	#else
+		if (isInitialized)
+		{
+			Debug.Log("Unity Ads is initialized.");
+		}
+		else Debug.LogWarning("Unity Ads is not enabled. See the Connect window in Unity for details.");
+	#endif
 	}
 	
 	private void DoInitialize ()
 	{
-		_isInitializing = true;
-
 		Debug.Log("Preparing for Unity Ads initialization...");
 
 		UnityAdsSettings settings = (UnityAdsSettings)Resources.Load("UnityAdsSettings");
@@ -110,29 +146,29 @@ public class UnityAdsHelper : MonoBehaviour
 		if (string.IsNullOrEmpty(gameId))
 		{
 			Debug.LogError("Failed to initialize Unity Ads. A valid game ID is required.");
+			_isInitializing = false;
+			return;
 		}
-		else
-		{
-			Advertisement.debugLevel = Advertisement.DebugLevel.None;
 
-			if (settings.showInfoLogs)    Advertisement.debugLevel |= Advertisement.DebugLevel.Info;
-			if (settings.showDebugLogs)   Advertisement.debugLevel |= Advertisement.DebugLevel.Debug;
-			if (settings.showWarningLogs) Advertisement.debugLevel |= Advertisement.DebugLevel.Warning;
-			if (settings.showErrorLogs)   Advertisement.debugLevel |= Advertisement.DebugLevel.Error;
-			
-			if (settings.enableTestMode && !Debug.isDebugBuild)
-			{
-				Debug.LogWarning("Development Build must be enabled in Build Settings to enable Test Mode for Unity Ads.");
-			}
-			
-			bool isTestModeEnabled = Debug.isDebugBuild && settings.enableTestMode;
-			Debug.Log(string.Format("Initializing Unity Ads for game ID {0} with Test Mode {1}...",
-			                        gameId, isTestModeEnabled ? "enabled" : "disabled"));
-			
-			Advertisement.Initialize(gameId,isTestModeEnabled);
-			
-			StartCoroutine(LogWhenUnityAdsIsInitialized());
+		Advertisement.debugLevel = Advertisement.DebugLevel.None;
+
+		if (settings.showInfoLogs)    Advertisement.debugLevel |= Advertisement.DebugLevel.Info;
+		if (settings.showDebugLogs)   Advertisement.debugLevel |= Advertisement.DebugLevel.Debug;
+		if (settings.showWarningLogs) Advertisement.debugLevel |= Advertisement.DebugLevel.Warning;
+		if (settings.showErrorLogs)   Advertisement.debugLevel |= Advertisement.DebugLevel.Error;
+		
+		if (settings.enableTestMode && !Debug.isDebugBuild)
+		{
+			Debug.LogWarning("Development Build must be enabled in Build Settings to enable Test Mode for Unity Ads.");
 		}
+		
+		bool isTestModeEnabled = Debug.isDebugBuild && settings.enableTestMode;
+		Debug.Log(string.Format("Initializing Unity Ads for game ID {0} with Test Mode {1}...",
+		                        gameId, isTestModeEnabled ? "enabled" : "disabled"));
+		
+		Advertisement.Initialize(gameId,isTestModeEnabled);
+		
+		StartCoroutine(LogWhenUnityAdsIsInitialized());
 	}
 	
 	private IEnumerator LogWhenUnityAdsIsInitialized ()
@@ -177,7 +213,8 @@ public class UnityAdsHelper : MonoBehaviour
 	/// <param name="zoneId">Ad placment zone ID.</param>
 	public static bool IsReady (string zoneId) 
 	{
-		zoneId = string.IsNullOrEmpty(zoneId) ? null : zoneId.Trim();
+		zoneId = zoneId.Trim();
+		if (string.IsNullOrEmpty(zoneId)) zoneId = null;
 
 		return Advertisement.IsReady(zoneId);
 	}
@@ -193,7 +230,8 @@ public class UnityAdsHelper : MonoBehaviour
 	/// <param name="zoneId">Ad placement zone ID.</param>
 	public static void ShowAd (string zoneId)
 	{
-		zoneId = string.IsNullOrEmpty(zoneId) ? null : zoneId.Trim();
+		zoneId = zoneId.Trim();
+		if (string.IsNullOrEmpty(zoneId)) zoneId = null;
 
 		if (Advertisement.IsReady(zoneId))
 		{
@@ -239,7 +277,7 @@ public class UnityAdsHelper : MonoBehaviour
 		onSkippedEvent = null;
 		onFailedEvent = null;
 	}
-	
+
 #else
 
 	public static void Initialize () 
