@@ -82,7 +82,7 @@ In this example, we'll show you how to initialize Unity Ads using the [UnityAdsH
 
 ![Unity Ads Settings Menu Item](images/menu-item-banner.png)
 
-The `UnityAdsHelper.Initialize()` method configures and initializes Unity Ads using the settings stored in a ScriptableObject called [UnityAdsSettings](Assets/UnityAdsHelper/Scripts/UnityAdsSettings.cs). By default, the UnityAdsSettings asset can be found in the Resrouces directory. You can view the UnityAdsSettings asset in the Inspector by selecting it directly, or by selecting **Edit > Unity Ads Settings** from the Unity Editor menu. Selecting this menu item will create the UnityAdsSettings asset if it does not already exist in your project.
+The `UnityAdsHelper.Initialize()` method configures and initializes Unity Ads using the settings stored in a ScriptableObject called [UnityAdsSettings](Assets/UnityAdsHelper/Scripts/UnityAdsSettings.cs). By default, the UnityAdsSettings asset can be found in the Resources directory. You can view the UnityAdsSettings asset in the Inspector by selecting it directly, or by selecting **Edit > Unity Ads Settings** from the Unity Editor menu. Selecting this menu item will create the UnityAdsSettings asset if it does not already exist in your project.
 
 The Test Mode option is enabled by default in Unity Ads Settings. While developing and testing your game, you should always leave Test Mode enabled. The only time it's appropriate to disable Test Mode is in cases where you are attempting to test the functionality of production ad campaigns, instead of just test ad campaigns.
 
@@ -94,7 +94,7 @@ One of the nice things about the UnityAdsHelper script is that it can be used to
 
 For the purposes of this example, let's initialize Unity Ads by calling `UnityAdsHelper.Initialize()`.
 
-**UnityAdsExample.cs**  
+**C# Example – UnityAdsExample.cs**  
 ```csharp
 using UnityEngine;
 using System.Collections;
@@ -108,7 +108,7 @@ public class UnityAdsExample : MonoBehaviour
 }
 ```
 
-**UnityAdsExample.js**  
+**JavaScript Example – UnityAdsExample.js**  
 ```javascript
 #pragma strict
 
@@ -121,6 +121,8 @@ public class UnityAdsExample extends MonoBehaviour
 }
 ```
 
+Now lets add the script to your scene. Create a new GameObject in your main scene and rename it to UnityAdsExample. Then add the UnityAdsExample script to it.
+
 The UnityAdsHelper should only be initialized once within your game, ideally when your game first starts up. In any case, the UnityAdsHelper is capable of managing its own instances, and persists across scene loads. So there will only ever be one UnityAdsHelper at a time in your game, and Unity Ads will only be initialized once.
 
 > **Pro Tip: Designing for User Experience**
@@ -129,7 +131,7 @@ The UnityAdsHelper should only be initialized once within your game, ideally whe
 >
 > For instance, if you've designed your game to delay the showing of ads until after the user has had time to learn the rules of gameplay and progress through a few levels, it may take a few game sessions before they reach a point where they would start seeing ads.
 >
-> In this case, you could hold off on initializing Unity Ads until they've crossed this threshold. Keep in mind though, Unity Ads does take several seconds to initialize and cache the assets neccessary to show an ad. You should therefore allow sufficient time for Unity Ads to finish initializing before showing an ad.
+> In this case, you could hold off on initializing Unity Ads until they've crossed this threshold. Keep in mind though, Unity Ads does take several seconds to initialize and cache the assets necessary to show an ad. You should therefore allow sufficient time for Unity Ads to finish initializing before showing an ad.
 
 [⇧ Back to top](#unity-ads-helper)
 
@@ -162,11 +164,11 @@ Example assets are located in [Assets/UnityAdsHelper/Examples](Assets/UnityAdsHe
 * [ButtonExample.cs](Assets/UnityAdsHelper/Examples/Scripts/ButtonExample.cs) - A Unity UI Button example script used to show rewarded ads.
   * Specify a zone ID or leave blank to use the default zone.  
   * Set a cooldown time in seconds to control how often users can watch rewarded ads.
-  * Set a reward amount the user should recieve after watching an ad without skipping.
+  * Set a reward amount the user should receive after watching an ad without skipping.
   * Cooldowns persist across scenes and game sessions.
   * Cooldowns are independent of each other.
 * [ShowAdOnLoad.cs](Assets/UnityAdsHelper/Examples/Scripts/ShowAdOnLoad.cs) - Script for showing an ad when the scene loads.
-  * Specify a zone ID or leave blacn to use the default zone.
+  * Specify a zone ID or leave blank to use the default zone.
   * Set a timeout duration in seconds to allow for initialization.
   * Set a timeout duration in seconds to allow ads to become ready.
   * Set a yield time in seconds for how often `isInitialized` and `IsReady()` will be evaluated.
