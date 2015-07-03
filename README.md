@@ -151,9 +151,19 @@ The UnityAdsHelper should only be initialized once within your game, ideally whe
 Example assets are located in [Assets/UnityAdsHelper/Examples](Assets/UnityAdsHelper/Examples/):
 
 * UnityAdsExample.unity - Example scene file.  
-* [UnityAdsExample.cs](Assets/UnityAdsHelper/Examples/Scripts/UnityAdsExample.cs) - Main example script.  
-* [ButtonExample.cs](Assets/UnityAdsHelper/Examples/Scripts/ButtonExample.cs) - Unity UI Button example script.  
+* [UnityAdsExample.cs](Assets/UnityAdsHelper/Examples/Scripts/UnityAdsExample.cs) - The main example script used to initialize UnityAdsHelper.  
+* [ButtonExample.cs](Assets/UnityAdsHelper/Examples/Scripts/ButtonExample.cs) - A Unity UI Button example script used to show rewarded ads.
+  * Specify a zone ID or leave blank to use the default zone.  
+  * Set a cooldown time in seconds to control how often users can watch ads for rewards.
+  * Set a reward amount the user should recieve when watching an ad without skipping.
+  * Cooldowns persist across scenes and game sessions.
+  * Cooldowns are independent of each other.
 * [ShowAdOnLoad.cs](Assets/UnityAdsHelper/Examples/Scripts/ShowAdOnLoad.cs) - Script for showing an ad when the scene loads.
+  * Specify a zone ID or leave blacn to use the default zone.
+  * Set a timeout duration in seconds to allow for initialization.
+  * Set a timeout duration in seconds to allow ads to become ready.
+  * Set a yield interval in seconds for how ofter to evaluate if Unity Ads is initialized and ready.
+  * The process of showing and ad on load will be canceled if either timeout is exceeded.
 
 These assets are reusable. Feel free to modify them for use in your own project.
 
