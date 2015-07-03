@@ -1,4 +1,9 @@
-﻿using UnityEditor;
+﻿#if UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
+#define UNITY_ADS_SDK
+#endif
+
+#if UNITY_ADS_SDK
+using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 using System.Collections;
@@ -10,6 +15,8 @@ public class UnityAdsSettingsEditor : Editor
 	private const string _settingsFile = "UnityAdsSettings";
 	private const string _settingsFileExtension = ".asset";
 
+	private const string _helpMsgPlatform = "Platform must be set to either iOS or Android " +
+		"for Unity Ads to be initialized in editor.";
 	private const string _helpMsgGameIds = "Enter your game IDs for iOS and Android into the fields below. " +
 		"Game IDs can be found listed on the Games page of the Unity Ads Admin.";
 	private const string _helpMsgTestMode = "Test mode should be enabled while testing the functionality of Unity Ads. " +
@@ -20,7 +27,7 @@ public class UnityAdsSettingsEditor : Editor
 	private const string _urlUnityAdsAdmin = "http://unityads.unity3d.com/admin";
 	private const string _urlUnityAdsDocs = "http://unityads.unity3d.com/help";
 	private const string _urlUnityAdsForum = "http://forum.unity3d.com/forums/unity-ads.67/";
-
+	
 	[MenuItem("Edit/Unity Ads Settings")]
 	public static void ShowSettings()
 	{
@@ -71,7 +78,9 @@ public class UnityAdsSettingsEditor : Editor
 		else if (string.IsNullOrEmpty(settings.androidGameId.Trim()))
 		{
 			_msgTypeGameIds = MessageType.Error;
-		} 
+		}
+	#else
+		EditorGUILayout.HelpBox(_helpMsgPlatform,MessageType.Warning);
 	#endif
 
 		EditorGUILayout.HelpBox(_helpMsgGameIds,_msgTypeGameIds);
@@ -126,3 +135,4 @@ public class UnityAdsSettingsEditor : Editor
 		return settings;
 	}
 }
+#endif
