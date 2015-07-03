@@ -162,7 +162,7 @@ Example assets are located in [Assets/UnityAdsHelper/Examples](Assets/UnityAdsHe
   * Specify a zone ID or leave blacn to use the default zone.
   * Set a timeout duration in seconds to allow for initialization.
   * Set a timeout duration in seconds to allow ads to become ready.
-  * Set a yield interval in seconds for how often `isInitialized` and `IsReady()` should be evaluated.
+  * Set a yield time in seconds for how often `isInitialized` and `IsReady()` will be evaluated.
   * The process of showing and ad on load will be canceled if either timeout is exceeded.
 
 These assets are reusable. Feel free to modify them for use in your own project.
