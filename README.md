@@ -139,7 +139,7 @@ The UnityAdsHelper should only be initialized once within your game, ideally whe
 
 In this section, we'll create and configure a Unity UI Button for use with this example.
 
-> _To learn more about the Unity UI system, be sure to check out the [Tutorials](http://unity3d.com/learn/tutorials/modules/beginner/ui) and [Docs](http://docs.unity3d.com/Manual/UISystem.html)._
+> _**To learn more:** Be sure to check out the [Tutorials](http://unity3d.com/learn/tutorials/modules/beginner/ui) and [Docs](http://docs.unity3d.com/Manual/UISystem.html) for the Unity UI system._
 
 **Step 1:** Start by creating a new Unity UI Button in your scene. Creating a new UI Button will also add a UI Canvas and EventSystem to your scene.
 
