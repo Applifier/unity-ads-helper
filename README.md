@@ -139,8 +139,6 @@ The UnityAdsHelper should only be initialized once within your game, ideally whe
 
 In this section, we'll create and configure a Unity UI Button for use with this example.
 
-> _**To learn more:** Be sure to check out the [Tutorials](http://unity3d.com/learn/tutorials/modules/beginner/ui) and [Docs](http://docs.unity3d.com/Manual/UISystem.html) for the Unity UI system._
-
 **Step 1:** Start by creating a new Unity UI Button in your scene. Creating a new UI Button will also add a UI Canvas and EventSystem to your scene.
 
 1. Select **GameObject > UI > Button** from the Unity Editor menu.
@@ -174,6 +172,8 @@ In this section, we'll create and configure a Unity UI Button for use with this 
 1. Set the Match value to 0.5 between Width and Height.
 
 ![Example Canvas Scaler](images/example-canvas-scaler.png)
+
+> _To learn more, be sure to check out the [Tutorials](http://unity3d.com/learn/tutorials/modules/beginner/ui) and [Docs](http://docs.unity3d.com/Manual/UISystem.html) for the Unity UI system._
 
 [⇧ Back to top](#unity-ads-helper)
 
