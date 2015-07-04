@@ -80,7 +80,7 @@ In this example, we'll show you how to initialize Unity Ads using the [UnityAdsH
 
 ### Initializing Unity Ads
 
-![Unity Ads Settings Menu Item](images/menu-item-banner.png)
+![Unity Ads Settings](images/menu-item-banner.png)
 
 The `UnityAdsHelper.Initialize()` method configures and initializes Unity Ads using the settings stored in a ScriptableObject called [UnityAdsSettings](Assets/UnityAdsHelper/Scripts/UnityAdsSettings.cs). By default, the UnityAdsSettings asset can be found in the Resources directory. You can view the UnityAdsSettings asset in the Inspector by selecting it directly, or by selecting **Edit > Unity Ads Settings** from the Unity Editor menu. Selecting this menu item will create the UnityAdsSettings asset if it does not already exist in your project.
 
@@ -137,6 +137,8 @@ The UnityAdsHelper should only be initialized once within your game, ideally whe
 
 ### Creating a Unity UI Button
 
+![Unity UI Button](images/button-ui-banner.png)
+
 In this section, we'll create and configure a Unity UI Button for use with this example.
 
 **Step 1:** Start by creating a new Unity UI Button in your scene. Creating a new UI Button will also add a UI Canvas and EventSystem to your scene if they don't already exist.
@@ -163,7 +165,7 @@ In this section, we'll create and configure a Unity UI Button for use with this 
 1. Enter "Waiting..." into the Text field of the the Text component.
 1. Disable the Text component of the GameObject for the time being.
 
-![Example Hierachy](images/example-hierarchy.png) 
+![Example Hierachy](images/example-hierarchy.png)
 ![Example ReadyText](images/example-waitingtext.png)
 
 **Step 4:** Configure the Canvas to scale with screen size.
@@ -179,6 +181,8 @@ In this section, we'll create and configure a Unity UI Button for use with this 
 [⇧ Back to top](#unity-ads-helper)
 
 ### Using a Unity UI Button to Show Ads
+
+![Button Example](images/button-example-banner.png)
 
 With the UI all setup, let's write a script we can use to show an ad using the UI Button's OnClick UnityEvent, and make the UI Button interactable only when ads are ready.
 
