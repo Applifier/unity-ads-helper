@@ -121,7 +121,7 @@ public class UnityAdsExample extends MonoBehaviour
 }
 ```
 
-Now lets add the script to your scene. Create a new GameObject in your main scene and rename it to UnityAdsExample. Then add the UnityAdsExample script to it.
+Now let's add the script to your scene. Create a new GameObject in your main scene and rename it to UnityAdsExample. Then add the UnityAdsExample script to it.
 
 The UnityAdsHelper should only be initialized once within your game, ideally when your game first starts up. In any case, the UnityAdsHelper is capable of managing its own instances, and persists across scene loads. So there will only ever be one UnityAdsHelper at a time in your game, and Unity Ads will only be initialized once.
 
@@ -139,13 +139,13 @@ The UnityAdsHelper should only be initialized once within your game, ideally whe
 
 In this section, we'll create and configure a Unity UI Button for use with this example.
 
-**Step 1:** Start by creating a new Unity UI Button in your scene. Creating a new UI Button will also add a UI Canvas and EventSystem to your scene.
+**Step 1:** Start by creating a new Unity UI Button in your scene. Creating a new UI Button will also add a UI Canvas and EventSystem to your scene if they don't already exist.
 
 1. Select **GameObject > UI > Button** from the Unity Editor menu.
 1. Press the T key to switch to using the Rect Transform Tool.
-1. Select and drag the button to the center of the canvas.
+1. Select and drag the UI Button to the center of the Canvas.
 
-**Step 2:** Customize the button for use with this example.
+**Step 2:** Customize the UI Button for use with this example.
 
 1. Rename the new UI Button to _ShowAdButton_.
 1. Expand _ShowAdButton_ in the Hierarchy to view child objects.
@@ -155,7 +155,7 @@ In this section, we'll create and configure a Unity UI Button for use with this 
 
 ![Example Scene](images/example-scene.png)
 
-**Step 3:** Create non-interactable version of the UI Text GameObject.
+**Step 3:** Create a non-interactable version of the UI Text GameObject.
 
 1. Locate and select the GameObject named _ReadyText_.
 1. Select **Edit > Duplicate** to create a duplicate GameObject.
@@ -163,7 +163,8 @@ In this section, we'll create and configure a Unity UI Button for use with this 
 1. Enter "Waiting..." into the Text field of the the Text component.
 1. Disable the Text component of the GameObject for the time being.
 
-![Example Hierarchy](images/example-hierarchy.png)
+![Example Hierachy](images/example-hierarchy.png) 
+![Example ReadyText](images/example-waitingtext.png)
 
 **Step 4:** Configure the Canvas to scale with screen size.
 
