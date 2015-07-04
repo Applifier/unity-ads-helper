@@ -44,20 +44,20 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 **Step 2:** Set the **Platform** to either **iOS** or **Android**:
 
 1. Select **File > Build Settings...** from the Unity Editor menu.  
-2. Select **iOS** or **Android** from the **Platform** list.
-3. Select **Switch Platform**.
+1. Select **iOS** or **Android** from the **Platform** list.
+1. Select **Switch Platform**.
 
 ![Build Settings](images/build-settings.png)
 
 **Step 3:** Enable **Development Build** to allow for the use of **Test Mode** with Unity Ads:
 
 1. Select **File > Build Settings...** from the Unity Editor menu.  
-2. Check the box next to **Development Build** to enable.
+1. Check the box next to **Development Build** to enable.
 
 **Step 4:** Configure Unity Ads for your project:
 
 1. Select **Edit > Unity Ads Settings** from the Unity Editor menu.  
-2. Enter your **iOS Game ID** and **Android Game ID** in the fields provided.  
+1. Enter your **iOS Game ID** and **Android Game ID** in the fields provided.  
 
 ![Unity Ads Settings](images/unity-ads-settings.png)
 
@@ -71,8 +71,8 @@ Move the **UnityAdsHelper** directory into the **Standard Assets** directory.
 A simple Unity Ads integration can be summed up in just 3 steps:
 
 1. Initialize the Unity Ads SDK.  
-2. Determine if an ad is ready.  
-3. Show the ad.  
+1. Determine if an ad is ready.  
+1. Show the ad.  
 
 In this example, we'll show you how to initialize Unity Ads using the [UnityAdsHelper](Assets/UnityAdsHelper/Scripts/UnityAdsHelper.cs) script. Then we'll guide you through setting up a Unity UI Button that will show an ad using a method that utilizes the UnityAdsHelper script.
 
@@ -137,11 +137,49 @@ The UnityAdsHelper should only be initialized once within your game, ideally whe
 
 ### Creating a Unity UI Button
 
-[Placeholder]
+In this section, we'll create and configure a Unity UI Button for use with this example.
+
+**Step 1:** Start by creating a new Unity UI Button in your scene. Creating a new UI Button will also add a UI Canvas and EventSystem to your scene.
+
+1. Select **GameObject > UI > Button** from the Unity Editor menu.
+1. Press the T key to switch to using the Rect Transform Tool.
+1. Select and drag the button to the center of the canvas.
+
+**Step 2:** Customize the button for use with this example.
+
+1. Rename the new UI Button to _ShowAdButton_.
+1. Expand _ShowAdButton_ in the Hierarchy to view child objects.
+1. Locate and select the GameObject named _Text_.
+1. Rename the _Text_ GameObject to _ReadyText_.
+1. Enter "Show Default Ad" into the Text field of the Text component.
+
+![Example Scene](images/example-scene.png)
+
+**Step 3:** Create non-interactable version of the UI Text GameObject.
+
+1. Locate and select the GameObject named _ReadyText_.
+1. Select **Edit > Duplicate** to create a duplicate GameObject.
+1. Rename the duplicate GameObject to _WaitingText_.
+1. Enter "Waiting..." into the Text field of the the Text component.
+1. Disable the Text component of the GameObject for the time being.
+
+![Example Hierarchy](images/example-hierarchy.png)
+
+**Step 4:** Configure the Canvas to scale with screen size.
+
+1. Locate and select the GameObject named _Canvas_.
+1. Set the UI Scale Mode of the Canvas Scaler to Scale With Screen Size.
+1. Set the Match value to 0.5 between Width and Height.
+
+![Example Canvas Scaler](images/example-canvas-scaler.png)
+
+> _To learn more about the Unity UI system, be sure to check out the [Tutorials](http://unity3d.com/learn/tutorials/modules/beginner/ui) and [Docs](http://docs.unity3d.com/Manual/UISystem.html)._
 
 [⇧ Back to top](#unity-ads-helper)
 
 ### Using a Unity UI Button to Show Ads
+
+With the UI all setup, let's write a script we can use to show an ad using the UI Button's OnClick UnityEvent, and make the UI Button interactable only when ads are ready.
 
 [Placeholder]
 
@@ -149,7 +187,13 @@ The UnityAdsHelper should only be initialized once within your game, ideally whe
 
 ### Rewarding Users for Watching Ads
 
+Typically buttons are used to show _rewarded_ ads, allowing your users the chance to opt-in before showing a non-skippable ad.
+
 [Placeholder]
+
+> **Pro Tip: Improving eCPM via Rewarded Ads**
+>
+> Rewarded ads are a way to provide users with incentive to watch video ads without skipping them in exchange for an in-game reward.
 
 [⇧ Back to top](#unity-ads-helper)
 
@@ -186,11 +230,6 @@ class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/M
 
 #### Static Properties
 
-* ##### isShowing
-  `public static bool isShowing { get; }`  
-
-  Gets a value indicating whether an ad is currently showing.
-
 * ##### isSupported
   `public static bool isSupported { get; }`  
 
@@ -201,17 +240,22 @@ class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/M
 
   Gets a value indicating whether Unity Ads is initialized.
 
+* ##### isShowing
+  `public static bool isShowing { get; }`  
+
+  Gets a value indicating whether an ad is currently showing.
+
+* ##### gamerSID
+  `public static string gamerSID { get; }`
+
+  Gets the gamerSID, a unique identifier used with Server-to-Server Redeem Callbacks.
+
 #### Static Methods
 
 * ##### Initialize
   `public static void Initialize ();`  
 
   Configures and initializes Unity Ads using an instance of `UnityAdsSettings`. To configure Unity Ads settings, select **Edit > Unity Ads Settings** from the Unity Editor menu.
-
-* ##### SetGamerSID  
-  `public static void SetGamerSID (string gamerSID);`
-
-  Sets the gamer SID parameter, a unique identifier used with Server-to-Server Redeem Callbacks.
 
 * ##### IsReady
   `public static bool IsReady ();`  
@@ -224,6 +268,11 @@ class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/M
   `public static void ShowAd (string zoneId);`  
 
   Shows an ad using the specified `zoneId`. If the `zoneId` is not specified, or is set to `null`, the default ad placement zone will be used instead.
+
+* ##### SetGamerSID  
+  `public static void SetGamerSID (string gamerSID);`
+
+  Sets the gamer SID parameter, a unique identifier used with Server-to-Server Redeem Callbacks.
 
 #### Static Events
 
