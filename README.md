@@ -347,6 +347,8 @@ Video ads are only shown when running on iOS or Android devices.
 
 ### Rewarding Users for Watching Ads
 
+![Example Rewarded Ad](images/example-rewarded-banner.png)
+
 Since rewarded ads are typically non-skippable, some form of button or prompt should always be used to show a rewarded ad. Doing so presents your users with the _choice_ to opt-in, which can lead to a better user experience while making ad impressions more effective.
 
 However, when offering rewarded ads, you may also want to limit how often users are able to redeem rewards for watching ads. In this case, you could implement a cooldown between ads.
