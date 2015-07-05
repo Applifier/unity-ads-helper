@@ -360,7 +360,6 @@ Let's update the the ButtonExample script with a method to reward users and set 
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
-using System;
 
 public class ButtonExample : MonoBehaviour
 {
@@ -372,7 +371,7 @@ public class ButtonExample : MonoBehaviour
 	public float cooldownTime = 300f;
 	public int rewardAmount = 250;
 
-	private DateTime _cooldownTime;
+	private float _cooldownTime;
 
 	private Button _button;
 
@@ -394,7 +393,7 @@ public class ButtonExample : MonoBehaviour
 
 	private bool IsReady ()
 	{
-		if (DateTime.Compare(DateTime.UtcNow,_cooldownTime) > 0)
+		if (Time.time > _cooldownTime)
 		{
 			return UnityAdsHelper.IsReady(zoneId);
 		}
@@ -416,7 +415,7 @@ public class ButtonExample : MonoBehaviour
 
 		if (cooldownTime > 0)
 		{
-			_cooldownTime = DateTime.UtcNow.AddSeconds(cooldownTime);
+			_cooldownTime = Time.time + cooldownTime;
 			Debug.Log(string.Format("Next ad is available in {0} seconds.",cooldownTime));
 		}
 	}
@@ -427,7 +426,6 @@ public class ButtonExample : MonoBehaviour
 ```javascript
 #pragma strict
 import UnityEngine.UI;
-import System;
 
 public class ButtonExample extends MonoBehaviour
 {
@@ -439,7 +437,7 @@ public class ButtonExample extends MonoBehaviour
 	public var cooldownTime : float = 300f;
 	public var rewardAmount : int = 250;
 
-	private var _cooldownTime : DateTime;
+	private var _cooldownTime : float;
 
 	private var _button : Button;
 
@@ -461,7 +459,7 @@ public class ButtonExample extends MonoBehaviour
 
 	private function IsReady () : boolean
 	{
-		if (DateTime.Compare(DateTime.UtcNow,_cooldownTime) > 0)
+		if (Time.time > _cooldownTime)
 		{
 			return UnityAdsHelper.IsReady(zoneId);
 		}
@@ -483,7 +481,7 @@ public class ButtonExample extends MonoBehaviour
 
 		if (cooldownTime > 0)
 		{
-			_cooldownTime = DateTime.UtcNow.AddSeconds(cooldownTime);
+			_cooldownTime = Time.time + cooldownTime;
 			Debug.Log(String.Format("Next ad is available in {0} seconds.",cooldownTime));
 		}
 	}
