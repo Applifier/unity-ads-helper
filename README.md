@@ -157,7 +157,7 @@ In this section, we'll create and configure a Unity UI Button for use with this 
 
 ![Example Scene](images/example-scene.png)
 
-**Step 3:** Create a non-interactable version of the UI Text GameObject.
+**Step 3:** Create a non-interactable version of the button text.
 
 1. Locate and select the GameObject named _ReadyText_.
 1. Select **Edit > Duplicate** to create a duplicate GameObject.
@@ -176,7 +176,7 @@ In this section, we'll create and configure a Unity UI Button for use with this 
 
 ![Example Canvas Scaler](images/example-canvas-scaler.png)
 
-> _To learn more, be sure to check out the [Tutorials](http://unity3d.com/learn/tutorials/modules/beginner/ui) and [Docs](http://docs.unity3d.com/Manual/UISystem.html) for the Unity UI system._
+> _**Note:** Be sure to check out the Unity UI system [Tutorials](http://unity3d.com/learn/tutorials/modules/beginner/ui) and [Docs](http://docs.unity3d.com/Manual/UISystem.html) to learn more._
 
 [⇧ Back to top](#unity-ads-helper)
 
@@ -184,21 +184,327 @@ In this section, we'll create and configure a Unity UI Button for use with this 
 
 ![Button Example](images/button-example-banner.png)
 
-With the UI all setup, let's write a script we can use to show an ad using the UI Button's OnClick UnityEvent, and make the UI Button interactable only when ads are ready.
+With the Unity UI system all setup, let's write a script that can be used to show an ad with the UI Button's OnClick UnityEvent, and make the UI Button interactable only when ads are ready.
 
-[Placeholder]
+**Step 1:** Create a new script called _ButtonExample_ and define a `ShowAd()` method.
+
+Defining the `zoneId` as a public variable allows us to easily update it from the Inspector. If a zone ID is not specified, the default zone will be used instead.
+
+A full list of available zone IDs can be found in the [Unity Ads Admin](http://unityads.unity3d.com/admin) under the Monetization Settings tab of your game profile.
+
+**C# Example – ButtonExample.cs**  
+```csharp
+using UnityEngine;
+using System.Collections;
+
+public class ButtonExample : MonoBehaviour
+{
+	public string zoneId;
+
+	public void ShowAd ()
+	{
+		UnityAdsHelper.ShowAd(zoneId);
+	}
+}
+```
+
+**JavaScript Example – ButtonExample.js**  
+```javascript
+#pragma strict
+
+public class ButtonExample extends MonoBehaviour
+{
+	public var zoneId : String;
+
+	public function ShowAd () : void
+	{
+		UnityAdsHelper.ShowAd(zoneId);
+	}
+}
+```
+
+**Step 2:** Add the ButtonExample script to the UI Button in your scene.
+
+1. Locate and select the _ShowAdButton_ GameObject.
+1. Select **Component > Scripts > Button Example** from the Unity Editor menu.
+
+**Step 3:** Configure the UI Button's OnClick UnityEvent.
+
+1. Locate and select the _ShowAdButton_ GameObject.
+1. Locate the OnClick section of the Button componenet.
+1. Select the + button under the OnClick section to add a UnityEvent.
+1. Select and drag the _ShowAdButton_ GameObject from the Hierarchy to the target GameObject field of the new OnClick UnityEvent.
+1. Select **ButtonExample > ShowAd()** from the function dropdown menu of the new OnClick UnityEvent.
+
+![Example OnClick UnityEvent](images/example-onclick.png)
+
+> _**Note:** At this point you can run the game to test out the button. But keep in mind, we're not yet checking to see if ads are ready. We'll do this in the following steps._
+
+**Step 4:** Update the ButtonExample script to handle the interactable state of the UI Button.
+
+**C# Example – ButtonExample.cs**  
+```csharp
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+
+public class ButtonExample : MonoBehaviour
+{
+	public Text textReady;
+	public Text textWaiting;
+
+	public string zoneId;
+
+	private Button _button;
+
+	void Start ()
+	{
+		_button = GetComponent<Button>();
+	}
+
+	void Update ()
+	{
+		if (_button)
+		{
+			_button.interactable = UnityAdsHelper.IsReady(zoneId);
+
+			if (textReady) textReady.enabled = _button.interactable;
+			if (textWaiting) textWaiting.enabled = !_button.interactable;
+		}
+	}
+
+	public void ShowAd ()
+	{
+		UnityAdsHelper.ShowAd(zoneId);
+	}
+}
+```
+
+**JavaScript Example – ButtonExample.js**  
+```javascript
+#pragma strict
+import UnityEngine.UI;
+
+public class ButtonExample extends MonoBehaviour
+{
+	public var textReady : Text;
+	public var textWaiting : Text;
+
+	public var zoneId : String;
+
+	private var _button : Button;
+
+	function Start () : void
+	{
+		_button = GetComponent.<Button>();
+	}
+
+	function Update () : void
+	{
+		if (_button)
+		{
+			_button.interactable = UnityAdsHelper.IsReady(zoneId);
+
+			if (textReady) textReady.enabled = _button.interactable;
+			if (textWaiting) textWaiting.enabled = !_button.interactable;
+		}
+	}
+
+	public function ShowAd () : void
+	{
+		UnityAdsHelper.ShowAd(zoneId);
+	}
+}
+```
+
+**Step 5:** Add UI Text components to the Text Ready and Text Waiting fields.
+
+1. Locate and select the _ShowAdButton_ GameObject.
+1. Expand _ShowAdButton_ in the Hierarchy to view child objects.
+1. Select and drag the _ReadyText_ GameObject to the Text Ready field.
+1. Select and drag the _WaitingText_ GameObject to the Text Waiting field.
+
+![Example Button Script](images/example-button-script.png)
+
+Now let's press the Play button in the Unity Editor toolbar to run the scene.
+
+Once Unity Ads is initialized and ad is ready to be shown, the _ShowAdButton_ will become interactable. Pressing the _ShowAdButton_ to show an ad will show a blue placeholder image while in the Unity Editor.
+
+Video ads are only shown when running on iOS or Android devices.
+
+> _**Note:** When running on device, the Unity player is paused while an ad is shown, then un-paused when the ad is hidden. However, in the Unity Editor, the Unity player is not paused._
+>
+> _To get the same effect in the Unity Editor, you would need to pause the AudioListener and set `Time.timeScale = 0` while the placeholder is shown. Then restore the `Time.timeScale` value and un-pause the AudioListener when the placeholder is hidden._
+>
+> _You can use `UnityAdsHelper.isShowing` to determine when to pause and un-pause your game while in the Unity Editor._
+>
+>     #if UNITY_EDITOR
+>     AudioListener.pause = UnityAdsHelper.isShowing;
+>     Time.timeScale = UnityAdsHelper.isShowing ? 0f : 1f;
+>     #endif
 
 [⇧ Back to top](#unity-ads-helper)
 
 ### Rewarding Users for Watching Ads
 
-Typically buttons are used to show _rewarded_ ads, allowing your users the chance to opt-in before showing a non-skippable ad.
+Since rewarded ads are typically non-skippable, some form of button or prompt should always be used to show a rewarded ad. Doing so presents your users with the _choice_ to opt-in, which can lead to a better user experience while making ad impressions more effective.
 
-[Placeholder]
+However, when offering rewarded ads, you may also want to limit how often users are able to redeem rewards for watching ads. In this case, you could implement a cooldown between ads.
 
-> **Pro Tip: Improving eCPM via Rewarded Ads**
+Let's update the the ButtonExample script with a method to reward users and set the cooldown for the next ad. We will assign this method to the `onFinishedEvent`, which is only called when an ad is watched but not skipped.
+
+**C# Example – ButtonExample.cs**  
+```csharp
+using UnityEngine;
+using UnityEngine.UI;
+using System.Collections;
+using System;
+
+public class ButtonExample : MonoBehaviour
+{
+	public Text textReady;
+	public Text textWaiting;
+
+	public string zoneId;
+
+	public float cooldownTime = 300f;
+	public int rewardAmount = 250;
+
+	private DateTime _cooldownTime;
+
+	private Button _button;
+
+	void Start ()
+	{
+		_button = GetComponent<Button>();
+	}
+
+	void Update ()
+	{
+		if (_button)
+		{
+			_button.interactable = IsReady();
+
+			if (textReady) textReady.enabled = _button.interactable;
+			if (textWaiting) textWaiting.enabled = !_button.interactable;
+		}
+	}
+
+	private bool IsReady ()
+	{
+		if (DateTime.Compare(DateTime.UtcNow,_cooldownTime) > 0)
+		{
+			return UnityAdsHelper.IsReady(zoneId);
+		}
+		else return false;
+	}
+
+	public void ShowAd ()
+	{
+		UnityAdsHelper.onFinishedEvent = OnFinished;
+		UnityAdsHelper.ShowAd(zoneId);
+	}
+
+	private void OnFinished ()
+	{
+		if (rewardAmount > 0)
+		{
+			Debug.Log("The player has earned a reward!");
+		}
+
+		if (cooldownTime > 0)
+		{
+			_cooldownTime = DateTime.UtcNow.AddSeconds(cooldownTime);
+			Debug.Log(string.Format("Next ad is available in {0} seconds.",cooldownTime));
+		}
+	}
+}
+```
+
+**JavaScript Example – ButtonExample.js**  
+```javascript
+#pragma strict
+import UnityEngine.UI;
+import System;
+
+public class ButtonExample extends MonoBehaviour
+{
+	public var textReady : Text;
+	public var textWaiting : Text;
+
+	public var zoneId : String;
+
+	public var cooldownTime : float = 300f;
+	public var rewardAmount : int = 250;
+
+	private var _cooldownTime : DateTime;
+
+	private var _button : Button;
+
+	function Start () : void
+	{
+		_button = GetComponent.<Button>();
+	}
+
+	function Update () : void
+	{
+		if (_button)
+		{
+			_button.interactable = IsReady();
+
+			if (textReady) textReady.enabled = _button.interactable;
+			if (textWaiting) textWaiting.enabled = !_button.interactable;
+		}
+	}
+
+	private function IsReady () : boolean
+	{
+		if (DateTime.Compare(DateTime.UtcNow,_cooldownTime) > 0)
+		{
+			return UnityAdsHelper.IsReady(zoneId);
+		}
+		else return false;
+	}
+
+	public function ShowAd () : void
+	{
+		UnityAdsHelper.onFinishedEvent = OnFinished;
+		UnityAdsHelper.ShowAd(zoneId);
+	}
+
+	private function OnFinished () : void
+	{
+		if (rewardAmount > 0)
+		{
+			Debug.Log("The player has earned a reward!");
+		}
+
+		if (cooldownTime > 0)
+		{
+			_cooldownTime = DateTime.UtcNow.AddSeconds(cooldownTime);
+			Debug.Log(String.Format("Next ad is available in {0} seconds.",cooldownTime));
+		}
+	}
+}
+```
+
+With the ButtonExample script updated, you can now set the Cooldown Time (in seconds) and Reward Amount from the Inspector. To use this script with non-rewarded ads, simply set both field values to 0.
+
+> **Pro Tip: Improving eCPM through Rewarded Ads**
 >
-> Rewarded ads are a way to provide users with incentive to watch video ads without skipping them in exchange for an in-game reward.
+> The eCPM is defined as the Effective Cost Per 1000 impressions.
+>
+>     eCPM = revenue / starts * 1000
+>
+> The eCPM is essentially a performance value used to indicate the effectiveness of ads shown in your game. The more impressions you have, the more reliable this value is.
+>
+> Statistically speaking, the first few ads shown tend to be the most effective in generating revenue. While the most successful ad implementations knowingly take advantage of this by only showing a few ads per user per day, they also make those impressions count.
+>
+> Video ads are most effective when players are willing to watch. An obvious statement, but it's safe to say the average user doesn't play your game just so they can watch ads. So where's the incentive?
+>
+> Using rewarded ads is a way to provide users with the motivation to watch non-skippable ads, in exchange for an in-game reward. For example, some games use rewarded ads to give an extra life or a second chance, allowing the user to continue gameplay from a fail state without having to restart from the very beginning. Another example might be to offer the user some amount of in-game currency or consumable item that could be applied toward upgrading their character or purchasing new equipment.
+>
+> Ultimately, using rewarded ads is a great way to effectively show ads, while also making them relevant to your game and less disruptive to the flow of the in-game experience.
 
 [⇧ Back to top](#unity-ads-helper)
 
