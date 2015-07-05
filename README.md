@@ -488,7 +488,9 @@ public class ButtonExample extends MonoBehaviour
 }
 ```
 
-With the ButtonExample script updated, you can now set the Cooldown Time (in seconds) and Reward Amount from the Inspector. To use this script with non-rewarded ads, simply set both field values to 0.
+With the ButtonExample script updated, you can now set the Cooldown Time (in seconds) and Reward Amount from the Inspector. To continue using this script with non-rewarded ads, simply set both field values to 0.
+
+![Example Inspector](images/example-inspector.png)
 
 > **Pro Tip: Improving eCPM through Rewarded Ads**
 >
