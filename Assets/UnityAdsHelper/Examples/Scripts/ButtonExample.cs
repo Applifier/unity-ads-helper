@@ -55,7 +55,7 @@ public class ButtonExample : MonoBehaviour
 
 	public void ShowAd ()
 	{
-		UnityAdsHelper.onFinishedEvent = OnFinished;
+		UnityAdsHelper.OnFinished = OnFinished;
 		UnityAdsHelper.ShowAd(zoneId);
 	}
 
