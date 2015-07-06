@@ -16,14 +16,14 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 
 ## Features
 
-* XML documentation comments for public fields and methods.  
+* Use of XML comments for documenting public fields and methods.  
 * Settings are stored as a ScriptableObject available from the Unity Editor menu.  
 * A robust `Initialize()` method that applies settings and logs when done initializing.  
 * A robust `ShowAd()` method that applies options and handles the result callback.  
-* Events for handling show results:  
-  * `onFinishedEvent`  
-  * `onSkippedEvent`  
-  * `onFailedEvent`  
+* Actions for handling show results:  
+  * `OnFinished`  
+  * `OnSkipped`  
+  * `OnFailed`  
 * A `SetGamerSID()` method for integrations using Server-to-Server Redeem Callbacks.  
 * Improved handling of common integration issues:  
   * Unity Ads is only initialized once per game session.  
@@ -31,7 +31,7 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
   * Game IDs are trimmed of white space and checked for `null` or empty values.  
   * Zone IDs are trimmed of white space and set to `null` if empty.  
   * JavaScript friendly methods.  
-* Example assets you can reuse in your own project.  
+* Example assets included for reuse in your own project.  
 
 [⇧ Back to top](#unity-ads-helper)
 
@@ -349,11 +349,11 @@ Video ads are only shown when running on iOS or Android devices.
 
 ![Example Rewarded Ad](images/example-rewarded-banner.png)
 
-Since rewarded ads are typically non-skippable, some form of button or prompt should always be used to show a rewarded ad. Doing so presents your users with the _choice_ to opt-in, which can lead to a better user experience while making ad impressions more effective.
+Since rewarded ads are typically non-skippable, some form of button or prompt should always be used to show a rewarded ad. Doing so presents your users with the choice to opt-in, which can lead to a better user experience while making ad impressions more effective.
 
 However, when offering rewarded ads, you may also want to limit how often users are able to redeem rewards for watching ads. In this case, you could implement a cooldown between ads.
 
-Let's update the the ButtonExample script with a method to reward users and set the cooldown for the next ad. We will assign this method to the `onFinishedEvent`, which is only called when an ad is watched but not skipped.
+Let's update the the ButtonExample script with a method to reward users and set the cooldown for the next ad. We will assign this method to the `OnFinished`, which is only called when an ad is watched but not skipped.
 
 **C# Example – ButtonExample.cs**  
 ```csharp
@@ -402,7 +402,7 @@ public class ButtonExample : MonoBehaviour
 
 	public void ShowAd ()
 	{
-		UnityAdsHelper.onFinishedEvent = OnFinished;
+		UnityAdsHelper.OnFinished = OnFinished;
 		UnityAdsHelper.ShowAd(zoneId);
 	}
 
@@ -468,7 +468,7 @@ public class ButtonExample extends MonoBehaviour
 
 	public function ShowAd () : void
 	{
-		UnityAdsHelper.onFinishedEvent = OnFinished;
+		UnityAdsHelper.OnFinished = OnFinished;
 		UnityAdsHelper.ShowAd(zoneId);
 	}
 
@@ -587,20 +587,20 @@ class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/M
 
   Sets the gamer SID parameter, a unique identifier used with Server-to-Server Redeem Callbacks.
 
-#### Static Events
+#### Static Actions
 
-* ##### onFinishedEvent
-  `public static Action onFinishedEvent;`  
+* ##### OnFinished
+  `public static Action OnFinished;`  
 
   Called when an ad is hidden. The ad was shown without being skipped.
 
-* ##### onSkippedEvent
-  `public static Action onSkippedEvent;`  
+* ##### OnSkipped
+  `public static Action OnSkipped;`  
 
   Called when an ad is hidden. The ad was skipped while being shown.
 
-* ##### onFailedEvent
-  `public static Action onFailedEvent;`  
+* ##### OnFailed
+  `public static Action OnFailed;`  
 
   Called when an error occurs while attempting to show an ad.
 
