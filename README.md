@@ -62,7 +62,7 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 ![Unity Ads Settings](images/unity-ads-settings.png)
 
 #### Developing with JavaScript?
-Move the **UnityAdsHelper** directory into the **Standard Assets** directory.
+Move the _UnityAdsHelper_ directory into the _Standard Assets_ directory.
 
 [⇧ Back to top](#unity-ads-helper)
 
@@ -74,7 +74,7 @@ A simple Unity Ads integration can be summed up in just 3 steps:
 1. Determine if an ad is ready.  
 1. Show the ad.  
 
-In this example, we'll show you how to initialize Unity Ads using the [UnityAdsHelper](Assets/UnityAdsHelper/Scripts/UnityAdsHelper.cs) script. Then we'll guide you through setting up a Unity UI Button that will show an ad using a method that utilizes the UnityAdsHelper script.
+In this example, we'll show you how to initialize Unity Ads using the [UnityAdsHelper](Assets/UnityAdsHelper/Scripts/UnityAdsHelper.cs) script. Then we'll guide you through setting up a Unity UI Button and script, utilizing the UnityAdsHelper to show an ad.
 
 [⇧ Back to top](#unity-ads-helper)
 
@@ -82,7 +82,7 @@ In this example, we'll show you how to initialize Unity Ads using the [UnityAdsH
 
 ![Unity Ads Settings](images/menu-item-banner.png)
 
-The `UnityAdsHelper.Initialize()` method configures and initializes Unity Ads by referencing the settings stored in [UnityAdsSettings](Assets/UnityAdsHelper/Scripts/UnityAdsSettings.cs), a ScriptableObject. By default, the UnityAdsSettings asset can be found in the Resources directory. You can view the UnityAdsSettings asset in the Inspector by selecting it directly, or by selecting **Edit > Unity Ads Settings** from the Unity Editor menu. Selecting this menu item will create the UnityAdsSettings asset if it does not already exist in your project.
+The `UnityAdsHelper.Initialize()` method configures and initializes Unity Ads by referencing the settings stored in an instance of [UnityAdsSettings](Assets/UnityAdsHelper/Scripts/UnityAdsSettings.cs), a ScriptableObject. By default, the _UnityAdsSettings_ asset can be found in the _Resources_ directory. You can view the _UnityAdsSettings_ asset in the Inspector by selecting it directly, or by selecting **Edit > Unity Ads Settings** from the Unity Editor menu. Selecting this menu item will create the _UnityAdsSettings_ asset if it does not already exist in your project.
 
 The option **Enable Test Mode** is enabled by default in UnityAdsSettings. While developing and testing your game, you should always leave Test Mode enabled. The only time it's appropriate to disable Test Mode is in cases where you are attempting to test the functionality of production ad campaigns, instead of just test ad campaigns.
 
