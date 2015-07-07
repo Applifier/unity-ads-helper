@@ -18,16 +18,16 @@ public class UnityAdsHelper : MonoBehaviour
 	/// Called when an ad is hidden. The ad was shown without being skipped. 
 	/// Use this event for rewarding users.
 	/// </summary>
-	public static Action OnFinished;
+	public static Action onFinished;
 	/// <summary>
 	/// Called when an ad is hidden. The ad was skipped while being shown. 
 	/// Users should not be rewarded.
 	/// </summary>
-	public static Action OnSkipped;
+	public static Action onSkipped;
 	/// <summary>
 	/// Called when an error occurs while attempting to show an ad.
 	/// </summary>
-	public static Action OnFailed;
+	public static Action onFailed;
 
 #pragma warning disable 0414
 	private static string _gamerSID;
@@ -256,15 +256,15 @@ public class UnityAdsHelper : MonoBehaviour
 		{
 		case ShowResult.Finished:
 			Debug.Log("The ad was successfully shown.");
-			if (OnFinished != null) OnFinished();
+			if (onFinished != null) onFinished();
 			break;
 		case ShowResult.Skipped:
 			Debug.LogWarning("The ad was skipped before reaching the end.");
-			if (OnSkipped != null) OnSkipped();
+			if (onSkipped != null) onSkipped();
 			break;
 		case ShowResult.Failed:
 			Debug.LogError("The ad failed to be shown.");
-			if (OnFailed != null) OnFailed();
+			if (onFailed != null) onFailed();
 			break;
 		}
 
@@ -273,9 +273,9 @@ public class UnityAdsHelper : MonoBehaviour
 
 	private static void ClearActions ()
 	{
-		OnFinished = null;
-		OnSkipped = null;
-		OnFailed = null;
+		onFinished = null;
+		onSkipped = null;
+		onFailed = null;
 	}
 
 #else
