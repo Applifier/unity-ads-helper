@@ -18,13 +18,13 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 
 * Use of XML comments for documenting public fields and methods.  
 * Settings are stored as a ScriptableObject available from the Unity Editor menu.  
-* A robust `Initialize()` method that applies settings and logs when done initializing.  
-* A robust `ShowAd()` method that applies options and handles the result callback.  
+* A robust `Initialize` method that applies settings and logs when done initializing.  
+* A robust `ShowAd` method that applies options and handles the result callback.  
 * Actions for handling show results:  
   * `OnFinished`  
   * `OnSkipped`  
   * `OnFailed`  
-* A `SetGamerSID()` method for integrations using Server-to-Server Redeem Callbacks.  
+* A `SetGamerSID` method for integrations using Server-to-Server Redeem Callbacks.  
 * Improved handling of common integration issues:  
   * Unity Ads is only initialized once per game session.  
   * Test Mode is tied to the Development Build option in Build Settings to prevent from accidentally shipping a game with test mode still enabled.  
@@ -49,7 +49,7 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 
 ![Build Settings](images/build-settings.png)
 
-**Step 3:** Enable **Development Build** to allow for the use of **Test Mode** with Unity Ads:
+**Step 3:** Enable **Development Build** to allow for the use of Test Mode with Unity Ads:
 
 1. Select **File > Build Settings...** from the Unity Editor menu.  
 1. Check the box next to **Development Build** to enable.
@@ -62,7 +62,7 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 ![Unity Ads Settings](images/unity-ads-settings.png)
 
 #### Developing with JavaScript?
-Move the **UnityAdsHelper** directory into the **Standard Assets** directory.
+Move the _UnityAdsHelper_ directory into the _Standard Assets_ directory.
 
 [⇧ Back to top](#unity-ads-helper)
 
@@ -74,7 +74,7 @@ A simple Unity Ads integration can be summed up in just 3 steps:
 1. Determine if an ad is ready.  
 1. Show the ad.  
 
-In this example, we'll show you how to initialize Unity Ads using the [UnityAdsHelper](Assets/UnityAdsHelper/Scripts/UnityAdsHelper.cs) script. Then we'll guide you through setting up a Unity UI Button that will show an ad using a method that utilizes the UnityAdsHelper script.
+In this example, we'll show you how to initialize Unity Ads using the [UnityAdsHelper](Assets/UnityAdsHelper/Scripts/UnityAdsHelper.cs) script. Then we'll guide you through setting up a Unity UI Button and script, utilizing the UnityAdsHelper to show an ad.
 
 [⇧ Back to top](#unity-ads-helper)
 
@@ -82,15 +82,18 @@ In this example, we'll show you how to initialize Unity Ads using the [UnityAdsH
 
 ![Unity Ads Settings](images/menu-item-banner.png)
 
-The `UnityAdsHelper.Initialize()` method configures and initializes Unity Ads using the settings stored in a ScriptableObject called [UnityAdsSettings](Assets/UnityAdsHelper/Scripts/UnityAdsSettings.cs). By default, the UnityAdsSettings asset can be found in the Resources directory. You can view the UnityAdsSettings asset in the Inspector by selecting it directly, or by selecting **Edit > Unity Ads Settings** from the Unity Editor menu. Selecting this menu item will create the UnityAdsSettings asset if it does not already exist in your project.
+The `UnityAdsHelper.Initialize()` method configures and initializes Unity Ads by referencing the settings stored in an instance of [UnityAdsSettings](Assets/UnityAdsHelper/Scripts/UnityAdsSettings.cs), a ScriptableObject. By default, the _UnityAdsSettings_ asset can be found in the _Resources_ directory. You can view the _UnityAdsSettings_ asset in the Inspector by selecting it directly, or by selecting **Edit > Unity Ads Settings** from the Unity Editor menu. Selecting this menu item will create the _UnityAdsSettings_ asset if it does not already exist in your project.
 
-The Test Mode option is enabled by default in Unity Ads Settings. While developing and testing your game, you should always leave Test Mode enabled. The only time it's appropriate to disable Test Mode is in cases where you are attempting to test the functionality of production ad campaigns, instead of just test ad campaigns.
+The option **Enable Test Mode** is enabled by default in UnityAdsSettings. While developing and testing your game, you should always leave Test Mode enabled. The only time it's appropriate to disable Test Mode is in cases where you are attempting to test the functionality of production ad campaigns, instead of just test ad campaigns.
 
 > _**Note:** Development Build must be enabled in Build Settings in order to initialize Unity Ads with Test Mode enabled. This is a feature of the UnityAdsHelper script, and is intended to help prevent from accidentally releasing a final build with Test Mode still enabled._
 
 ![Example Screenshots](images/example-screenshots.png)
 
-One of the nice things about the UnityAdsHelper script is that it can be used to initialize Unity Ads in one of two ways: by calling the `UnityAdsHelper.Initialize()` method from a script within your project, or simply by adding it as a component to a new GameObject in your main scene.
+One of the nice things about the UnityAdsHelper script is that it can be used to initialize Unity Ads in one of two ways:
+
+* by calling `UnityAdsHelper.Initialize()` from a script within your project,
+* or simply by adding the UnityAdsHelper script to a new GameObject in your main scene.
 
 For the purposes of this example, let's initialize Unity Ads by calling `UnityAdsHelper.Initialize()`.
 
@@ -121,11 +124,11 @@ public class UnityAdsExample extends MonoBehaviour
 }
 ```
 
-Now let's add the script to your scene. Create a new GameObject in your main scene and rename it to UnityAdsExample. Then add the UnityAdsExample script to it.
+Now let's add the script to your scene. Create a new GameObject in your main scene and rename it to _UnityAdsExample_. Then add the UnityAdsExample script to it.
 
 The UnityAdsHelper should only be initialized once within your game, ideally when your game first starts up. In any case, the UnityAdsHelper is capable of managing its own instances, and persists across scene loads. So there will only ever be one UnityAdsHelper at a time in your game, and Unity Ads will only be initialized once.
 
-> **Pro Tip: Designing for User Experience**
+> ##### Pro Tip: Designing for User Experience
 >
 > One thing to consider when designing your game with Unity Ads is that you don't always have to initialize Unity Ads at the start of your game.
 >
@@ -144,8 +147,8 @@ In this section, we'll create and configure a Unity UI Button for use with this 
 **Step 1:** Start by creating a new Unity UI Button in your scene. Creating a new UI Button will also add a UI Canvas and EventSystem to your scene if they don't already exist.
 
 1. Select **GameObject > UI > Button** from the Unity Editor menu.
-1. Press the T key to switch to using the Rect Transform Tool.
-1. Select and drag the UI Button to the center of the Canvas.
+1. Press the **T key** to switch to using the Rect Transform Tool.
+1. Select and drag the UI Button to the center of the UI Canvas.
 
 **Step 2:** Customize the UI Button for use with this example.
 
@@ -153,7 +156,7 @@ In this section, we'll create and configure a Unity UI Button for use with this 
 1. Expand _ShowAdButton_ in the Hierarchy to view child objects.
 1. Locate and select the GameObject named _Text_.
 1. Rename the _Text_ GameObject to _ReadyText_.
-1. Enter "Show Default Ad" into the Text field of the Text component.
+1. Enter "Show Default Ad" into the **Text** field of the Text component.
 
 ![Example Scene](images/example-scene.png)
 
@@ -162,17 +165,17 @@ In this section, we'll create and configure a Unity UI Button for use with this 
 1. Locate and select the GameObject named _ReadyText_.
 1. Select **Edit > Duplicate** to create a duplicate GameObject.
 1. Rename the duplicate GameObject to _WaitingText_.
-1. Enter "Waiting..." into the Text field of the the Text component.
+1. Enter "Waiting..." into the **Text** field of the the Text component.
 1. Disable the Text component of the GameObject for the time being.
 
 ![Example Hierachy](images/example-hierarchy.png)
 ![Example ReadyText](images/example-waitingtext.png)
 
-**Step 4:** Configure the Canvas to scale with screen size.
+**Step 4:** Configure the UI Canvas to scale with screen size.
 
 1. Locate and select the GameObject named _Canvas_.
-1. Set the UI Scale Mode of the Canvas Scaler to Scale With Screen Size.
-1. Set the Match value to 0.5 between Width and Height.
+1. Set the **UI Scale Mode** of the Canvas Scaler to **Scale With Screen Size**.
+1. Set the **Match** value to **0.5** between Width and Height.
 
 ![Example Canvas Scaler](images/example-canvas-scaler.png)
 
@@ -186,11 +189,11 @@ In this section, we'll create and configure a Unity UI Button for use with this 
 
 With the Unity UI system all setup, let's write a script that can be used to show an ad with the UI Button's OnClick UnityEvent, and make the UI Button interactable only when ads are ready.
 
-**Step 1:** Create a new script called _ButtonExample_ and define a `ShowAd()` method.
+**Step 1:** Create a new script called _ButtonExample_ and define a `ShowAd` method.
 
 Defining the `zoneId` as a public variable allows us to easily update it from the Inspector. If a zone ID is not specified, the default zone will be used instead.
 
-A full list of available zone IDs can be found in the [Unity Ads Admin](http://unityads.unity3d.com/admin) under the Monetization Settings tab of your game profile.
+> _**Note:** A full list of available zone IDs can be found in the [Unity Ads Admin](http://unityads.unity3d.com/admin) under the Monetization Settings tab of your game profile._
 
 **C# Example – ButtonExample.cs**  
 ```csharp
@@ -232,9 +235,9 @@ public class ButtonExample extends MonoBehaviour
 
 1. Locate and select the _ShowAdButton_ GameObject.
 1. Locate the OnClick section of the Button componenet.
-1. Select the + button under the OnClick section to add a UnityEvent.
-1. Select and drag the _ShowAdButton_ GameObject from the Hierarchy to the target GameObject field of the new OnClick UnityEvent.
-1. Select **ButtonExample > ShowAd()** from the function dropdown menu of the new OnClick UnityEvent.
+1. Press the **+ button** under the OnClick section to add a reference.
+1. Select and drag the _ShowAdButton_ GameObject from the Hierarchy to the target GameObject field.
+1. Select **ButtonExample > ShowAd ()** method from the dropdown menu.
 
 ![Example OnClick UnityEvent](images/example-onclick.png)
 
@@ -317,18 +320,18 @@ public class ButtonExample extends MonoBehaviour
 }
 ```
 
-**Step 5:** Add UI Text components to the Text Ready and Text Waiting fields.
+**Step 5:** Add UI Text components to the **Text Ready** and **Text Waiting** fields.
 
 1. Locate and select the _ShowAdButton_ GameObject.
 1. Expand _ShowAdButton_ in the Hierarchy to view child objects.
-1. Select and drag the _ReadyText_ GameObject to the Text Ready field.
-1. Select and drag the _WaitingText_ GameObject to the Text Waiting field.
+1. Select and drag the _ReadyText_ GameObject to the **Text Ready** field.
+1. Select and drag the _WaitingText_ GameObject to the **Text Waiting** field.
 
 ![Example Button Script](images/example-button-script.png)
 
-Now let's press the Play button in the Unity Editor toolbar to run the scene.
+Now let's press the **Play** button in the Unity Editor toolbar to run the scene.
 
-Once Unity Ads is initialized and ad is ready to be shown, the _ShowAdButton_ will become interactable. Pressing the _ShowAdButton_ to show an ad will show a blue placeholder image while in the Unity Editor.
+Once Unity Ads is initialized, and ad is ready to be shown, the _ShowAdButton_ will become interactable. Pressing the _ShowAdButton_ to show an ad will show a blue placeholder image while in the Unity Editor.
 
 Video ads are only shown when running on iOS or Android devices.
 
@@ -488,11 +491,15 @@ public class ButtonExample extends MonoBehaviour
 }
 ```
 
-With the ButtonExample script updated, you can now set the Cooldown Time (in seconds) and Reward Amount from the Inspector. To continue using this script with non-rewarded ads, simply set both field values to 0.
+With the ButtonExample script updated, you can now set the **Cooldown Time** (in seconds) and **Reward Amount** from the Inspector. Be sure to also specify the zone ID of your rewarded zone in the **Zone ID** field.
 
-![Example Inspector](images/example-inspector.png)
+![Example Rewarded](images/example-rewarded.png)
 
-> **Pro Tip: Improving eCPM through Rewarded Ads**
+> _**Note:** To continue using this script with non-rewarded ads, simply set **Cooldown Time** and **Reward Amount** to 0. Leave the **Zone ID** field empty to use the default zone._
+
+![Example Default](images/example-default.png)
+
+> ##### Pro Tip: Improving eCPM through Rewarded Ads
 >
 > The eCPM is defined as the Effective Cost Per 1000 impressions.
 >
