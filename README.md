@@ -49,7 +49,7 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 
 ![Build Settings](images/build-settings.png)
 
-**Step 3:** Enable **Development Build** to allow for the use of **Test Mode** with Unity Ads:
+**Step 3:** Enable **Development Build** to allow for the use of Test Mode with Unity Ads:
 
 1. Select **File > Build Settings...** from the Unity Editor menu.  
 1. Check the box next to **Development Build** to enable.
