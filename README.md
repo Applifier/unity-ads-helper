@@ -573,12 +573,12 @@ class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/M
 * ##### onFinished
   `public static Action onFinished;`  
 
-  Action to be fired when an ad was shown without being skipped.
+  Action to be fired when an ad is shown without being skipped.
 
 * ##### onSkipped
   `public static Action onSkipped;`  
 
-  Action to be fired when an ad was skipped while being shown.
+  Action to be fired when an ad is skipped while being shown.
 
 * ##### onFailed
   `public static Action onFailed;`  
