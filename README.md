@@ -21,9 +21,9 @@ The Unity Ads Helper is designed to streamline the integration of Unity Ads in U
 * A robust `Initialize` method that applies settings and logs when done initializing.  
 * A robust `ShowAd` method that applies options and handles the result callback.  
 * Actions for handling show results:  
-  * `OnFinished`  
-  * `OnSkipped`  
-  * `OnFailed`  
+  * `onFinished`  
+  * `onSkipped`  
+  * `onFailed`  
 * A `SetGamerSID` method for integrations using Server-to-Server Redeem Callbacks.  
 * Improved handling of common integration issues:  
   * Unity Ads is only initialized once per game session.  
@@ -134,7 +134,7 @@ The UnityAdsHelper should only be initialized once within your game, ideally whe
 >
 > For instance, if you've designed your game to delay the showing of ads until after the user has had time to learn the rules of gameplay and progress through a few levels, it may take a few game sessions before they reach a point where they would start seeing ads.
 >
-> In this case, you could hold off on initializing Unity Ads until they've crossed this threshold. Keep in mind though, Unity Ads does take several seconds to initialize and cache the assets necessary to show an ad. You should therefore allow sufficient time for Unity Ads to finish initializing before showing an ad.
+> In this case, you could hold off on initializing Unity Ads until after they've crossed this threshold. Keep in mind though, Unity Ads does take several seconds to initialize and cache the assets necessary to show an ad. You should therefore allow sufficient time for Unity Ads to finish initializing before attempting to show an ad.
 
 [⇧ Back to top](#unity-ads-helper)
 
@@ -356,7 +356,7 @@ Since rewarded ads are typically non-skippable, some form of button or prompt sh
 
 However, when offering rewarded ads, you may also want to limit how often users are able to redeem rewards for watching ads. In this case, you could implement a cooldown between ads.
 
-Let's update the the ButtonExample script with a method to reward users and set the cooldown for the next ad. We will assign this method to the `OnFinished`, which is only called when an ad is watched but not skipped.
+Let's update the the ButtonExample script with a method to reward users and set the cooldown for the next ad. We will assign this method to the `onFinished`, which is only called when an ad is watched but not skipped.
 
 **C# Example – ButtonExample.cs**  
 ```csharp
@@ -405,7 +405,7 @@ public class ButtonExample : MonoBehaviour
 
 	public void ShowAd ()
 	{
-		UnityAdsHelper.OnFinished = OnFinished;
+		UnityAdsHelper.onFinished = OnFinished;
 		UnityAdsHelper.ShowAd(zoneId);
 	}
 
@@ -471,7 +471,7 @@ public class ButtonExample extends MonoBehaviour
 
 	public function ShowAd () : void
 	{
-		UnityAdsHelper.OnFinished = OnFinished;
+		UnityAdsHelper.onFinished = OnFinished;
 		UnityAdsHelper.ShowAd(zoneId);
 	}
 
@@ -570,6 +570,21 @@ class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/M
 
   Gets the gamerSID, a unique identifier used with Server-to-Server Redeem Callbacks.
 
+* ##### onFinished
+  `public static Action onFinished;`  
+
+  Action to be fired when an ad was shown without being skipped.
+
+* ##### onSkipped
+  `public static Action onSkipped;`  
+
+  Action to be fired when an ad was skipped while being shown.
+
+* ##### onFailed
+  `public static Action onFailed;`  
+
+  Action to be fired when an error occurs while attempting to show an ad.
+
 #### Static Methods
 
 * ##### Initialize
@@ -593,22 +608,5 @@ class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/M
   `public static void SetGamerSID (string gamerSID);`
 
   Sets the gamer SID parameter, a unique identifier used with Server-to-Server Redeem Callbacks.
-
-#### Static Actions
-
-* ##### OnFinished
-  `public static Action OnFinished;`  
-
-  Called when an ad is hidden. The ad was shown without being skipped.
-
-* ##### OnSkipped
-  `public static Action OnSkipped;`  
-
-  Called when an ad is hidden. The ad was skipped while being shown.
-
-* ##### OnFailed
-  `public static Action OnFailed;`  
-
-  Called when an error occurs while attempting to show an ad.
 
 [⇧ Back to top](#unity-ads-helper)
