@@ -234,9 +234,9 @@ public class ButtonExample extends MonoBehaviour
 **Step 3:** Configure the UI Button's OnClick UnityEvent.
 
 1. Locate and select the _ShowAdButton_ GameObject.
-1. Locate the OnClick section of the Button componenet.
+1. Locate the OnClick section of the Button component.
 1. Press the **+ button** under the OnClick section to add a reference.
-1. Select and drag _ShowAdButton_ from the Hierarchy to the target GameObject field under OnClick.
+1. Select and drag _ShowAdButton_ from the Hierarchy to the target GameObject field.
 1. Select **ButtonExample > ShowAd ()** method from the dropdown menu.
 
 ![Example OnClick UnityEvent](images/example-onclick.png)
@@ -583,7 +583,7 @@ class / Inherits from: [MonoBehaviour](http://docs.unity3d.com/ScriptReference/M
 * ##### onFailed
   `public static Action onFailed;`  
 
-  Action to be fired if an error occurs while attempting to show an ad.
+  Action to be fired when an error occurs while attempting to show an ad.
 
 #### Static Methods
 
