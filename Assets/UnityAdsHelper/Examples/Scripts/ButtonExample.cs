@@ -24,8 +24,6 @@ public class ButtonExample : MonoBehaviour
 
 		_keyCooldownTime += name + gameObject.GetInstanceID().ToString();
 		_rewardCooldownTime = GetCooldownTime();
-
-		UnityAdsExample.onResetCooldownEvent += ResetCooldownTime;
 	}
 
 	void Update ()
@@ -37,11 +35,6 @@ public class ButtonExample : MonoBehaviour
 			if (textReady) textReady.enabled = _button.interactable;
 			if (textWaiting) textWaiting.enabled = !_button.interactable;
 		}
-	}
-
-	void OnDestroy ()
-	{
-		UnityAdsExample.onResetCooldownEvent -= ResetCooldownTime;
 	}
 
 	private bool IsReady ()
@@ -80,6 +73,14 @@ public class ButtonExample : MonoBehaviour
 			if (PlayerPrefs.HasKey(_keyCooldownTime))
 			{
 				_rewardCooldownTime = DateTime.Parse(PlayerPrefs.GetString(_keyCooldownTime));
+
+				if (Debug.isDebugBuild)
+				{
+					DateTime appStartTime = DateTime.UtcNow.AddSeconds(-1*Time.time);
+					DateTime lastRewardTime = _rewardCooldownTime.AddSeconds(-1*cooldownTime);
+
+					if (DateTime.Compare(appStartTime,lastRewardTime) > 0) ResetCooldownTime();
+				}
 			}
 			else _rewardCooldownTime = DateTime.UtcNow;
 		}
