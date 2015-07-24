@@ -3,7 +3,6 @@ using System.Collections;
 
 public class ShowAdOnLoad : MonoBehaviour 
 {
-#pragma warning disable 0414
 	public string zoneId;
 
 	public bool enableTimeouts = true;
@@ -13,11 +12,11 @@ public class ShowAdOnLoad : MonoBehaviour
 	public float yieldTime = 0.5f;   // Time in seconds between evaluation attempts.
 	
 	private float _startTime = 0f;
-#pragma warning restore 0414
-	
-#if UNITY_IOS || UNITY_ANDROID
+
 	IEnumerator Start ()
 	{
+		if (!UnityAdsHelper.isSupported) yield break;
+
 		string zoneName = string.IsNullOrEmpty(zoneId) ? "the default ad placement zone" : zoneId;
 		
 		_startTime = Time.timeSinceLevelLoad;
@@ -54,5 +53,4 @@ public class ShowAdOnLoad : MonoBehaviour
 		
 		UnityAdsHelper.ShowAd(zoneId);
 	}
-#endif
 }
