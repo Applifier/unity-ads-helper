@@ -122,11 +122,11 @@ public class UnityAdsSettingsEditor : Editor
 		
 		if (settings != null) 
 		{
-			if(!AssetDatabase.IsValidFolder("Assets/Resources")) 
+			if (!System.IO.Directory.Exists(Application.dataPath + "/Assets/Resources"))
 			{
 				AssetDatabase.CreateFolder("Assets","Resources");
 			}
-			
+
 			AssetDatabase.CreateAsset(settings, "Assets/Resources/" + _settingsFile + _settingsFileExtension);
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
