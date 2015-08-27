@@ -106,6 +106,8 @@ public class UnityAdsSettingsEditor : Editor
 		settings.showWarningLogs = EditorGUILayout.ToggleLeft(" Show Warning Logs",settings.showWarningLogs);
 		settings.showErrorLogs   = EditorGUILayout.ToggleLeft(" Show Error Logs",settings.showErrorLogs);
 
+		EditorUtility.SetDirty(settings);
+
 		EditorGUILayout.Space();
 
 		GUI.enabled = true;
