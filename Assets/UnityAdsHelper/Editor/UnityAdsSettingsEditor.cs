@@ -60,6 +60,8 @@ public class UnityAdsSettingsEditor : Editor
 
 		UnityAdsSettings settings = (UnityAdsSettings)target;
 
+		Undo.RecordObject(settings,"Inspector");
+
 		MessageType _msgTypeGameIds = MessageType.Info;
 	#if UNITY_IOS
 		if (settings.iosGameId == UnityAdsSettings.defaultIosGameId)
