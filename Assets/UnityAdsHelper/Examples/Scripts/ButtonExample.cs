@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System;
 
+[RequireComponent(typeof(Button))]
 public class ButtonExample : MonoBehaviour 
 {
 	public Text textReady;
@@ -21,6 +22,8 @@ public class ButtonExample : MonoBehaviour
 	void Awake ()
 	{
 		_button = GetComponent<Button>();
+
+		if (_button) _button.onClick.AddListener (delegate() { ShowAd(); });
 
 		_keyCooldownTime += name + gameObject.GetInstanceID().ToString();
 		_rewardCooldownTime = GetCooldownTime();
