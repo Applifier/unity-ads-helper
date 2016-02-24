@@ -91,7 +91,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleIdentifier: com.unityads.helper
+  bundleIdentifier: com.unity.ads.helper
   bundleVersion: 1.0
   preloadedAssets: []
   metroEnableIndependentInputSource: 0
@@ -100,7 +100,7 @@ PlayerSettings:
   protectGraphicsMemory: 0
   productGUID: fd40a394ad3984e50be6b997beb6c545
   AndroidBundleVersionCode: 1
-  AndroidMinSdkVersion: 9
+  AndroidMinSdkVersion: 10
   AndroidPreferredInstallLocation: 1
   aotOptions: 
   apiCompatibilityLevel: 2
@@ -334,8 +334,8 @@ PlayerSettings:
   psmSplashimage: {fileID: 0}
   spritePackerPolicy: 
   scriptingDefineSymbols:
-    4: UNITY_ADS_SDK
-    7: UNITY_ADS_SDK
+    4: 
+    7: 
   metroPackageName: UnityAdsHelper
   metroPackageVersion: 
   metroCertificatePath: 
@@ -421,14 +421,18 @@ PlayerSettings:
   iOS::EnableIncrementalBuildSupportForIl2cpp: 0
   iOS::ScriptingBackend: 1
   boolPropertyNames:
+  - Android::VR::enable
   - WebGL::analyzeBuildSize
   - WebGL::dataCaching
   - WebGL::useEmbeddedResources
   - XboxOne::enus
+  - iOS::VR::enable
+  Android::VR::enable: 0
   WebGL::analyzeBuildSize: 0
   WebGL::dataCaching: 0
   WebGL::useEmbeddedResources: 0
   XboxOne::enus: 1
+  iOS::VR::enable: 0
   stringPropertyNames:
   - Build_ServiceEnabled::Build_ServiceEnabled
   - ErrorHub_ServiceEnabled::ErrorHub_ServiceEnabled
@@ -444,7 +448,12 @@ PlayerSettings:
   WebGL::emscriptenArgs: 
   WebGL::template: APPLICATION:Default
   additionalIl2CppArgs::additionalIl2CppArgs: 
-  vectorPropertyNames: []
+  vectorPropertyNames:
+  - Android::VR::enabledDevices
+  - iOS::VR::enabledDevices
+  Android::VR::enabledDevices:
+  - Oculus
+  iOS::VR::enabledDevices: []
   cloudProjectId: 
   projectName: 
   organizationId: 
