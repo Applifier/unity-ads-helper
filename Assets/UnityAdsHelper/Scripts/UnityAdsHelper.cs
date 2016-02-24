@@ -1,8 +1,4 @@
-﻿#if UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
-#define UNITY_ADS_SDK
-#endif
-
-using System;
+﻿using System;
 using UnityEngine;
 using System.Collections;
 #if UNITY_IOS || UNITY_ANDROID
@@ -29,22 +25,20 @@ public class UnityAdsHelper : MonoBehaviour
 	/// </summary>
 	public static Action onFailed;
 
-#pragma warning disable 0414
-	private static string _gamerSID;
-#pragma warning restore 0414
 	/// <summary>
-	/// Gets the gamerSID, a unique identifier used with Server-to-Server Redeem Callbacks.
+	/// The gamerSID is a unique identifier used with Server-to-Server Redeem Callbacks.
 	/// </summary>
 	/// <value>The gamerSID.</value>
-	public static string gamerSID { get { return _gamerSID; }}
-	/// <summary>
-	/// Sets the gamerSID parameter, a unique identifier used with Server-to-Server Redeem Callbacks.
-	/// </summary>
-	/// <param name="gamerSID">Gamer SID.</param>
-	public static void SetGamerSID (string gamerSID)
+	public static string gamerSID { get { return _gamerSID; } set { _gamerSID = Validate(value); }}
+
+	private static string _gamerSID;
+
+	private static string Validate (string value)
 	{
-		gamerSID = gamerSID.Trim();
-		_gamerSID = string.IsNullOrEmpty(gamerSID) ? null : gamerSID;
+		value = value.Trim();
+		if (string.IsNullOrEmpty(value)) value = null;
+
+		return value;
 	}
 
 #if UNITY_IOS || UNITY_ANDROID
@@ -85,7 +79,7 @@ public class UnityAdsHelper : MonoBehaviour
 	/// </summary>
 	public static void Initialize () 
 	{ 
-	#if UNITY_ADS_SDK
+	#if !UNITY_ADS
 		if (_isInitializing)
 		{
 			Debug.LogWarning("Unity Ads is already being initialized.");
@@ -164,7 +158,7 @@ public class UnityAdsHelper : MonoBehaviour
 		
 		bool isTestModeEnabled = Debug.isDebugBuild && settings.enableTestMode;
 		Debug.Log(string.Format("Initializing Unity Ads for game ID {0} with Test Mode {1}...",
-		                        gameId, isTestModeEnabled ? "enabled" : "disabled"));
+			gameId, isTestModeEnabled ? "enabled" : "disabled"));
 		
 		Advertisement.Initialize(gameId,isTestModeEnabled);
 		
@@ -213,10 +207,7 @@ public class UnityAdsHelper : MonoBehaviour
 	/// <param name="zoneId">Ad placment zone ID.</param>
 	public static bool IsReady (string zoneId) 
 	{
-		zoneId = zoneId.Trim();
-		if (string.IsNullOrEmpty(zoneId)) zoneId = null;
-
-		return Advertisement.IsReady(zoneId);
+		return Advertisement.IsReady(Validate(zoneId));
 	}
 
 	/// <summary>
@@ -230,13 +221,42 @@ public class UnityAdsHelper : MonoBehaviour
 	/// <param name="zoneId">Ad placement zone ID.</param>
 	public static void ShowAd (string zoneId)
 	{
-		zoneId = zoneId.Trim();
-		if (string.IsNullOrEmpty(zoneId)) zoneId = null;
+		zoneId = Validate(zoneId);
 
 		if (Advertisement.IsReady(zoneId))
 		{
 			Debug.Log("Showing ad now...");
 			
+			ShowOptions options = new ShowOptions();
+			options.resultCallback = HandleShowResult;
+			options.gamerSid = null; // When using S2S Redeem Callbacks, ignore callbacks without an 'sid' parameter value.
+
+			Advertisement.Show(zoneId,options);
+		}
+		else 
+		{
+			Debug.LogWarning(string.Format("Unable to show ad. The ad placement zone {0} is not ready.",
+				zoneId == null ? "default" : zoneId));
+		}
+	}
+
+	/// <summary>
+	/// Shows a rewarded ad using the default ad placement zone.
+	/// </summary>
+	public static void ShowRewardedAd () { ShowAd(null); }
+	/// <summary>
+	/// Shows a rewarded ad using the specified ad placement zone ID.
+	/// To use the default ad placement zone, pass in a <c>null</c> value for the zone ID.
+	/// </summary>
+	/// <param name="zoneId">Ad placement zone ID.</param>
+	public static void ShowRewardedAd (string zoneId)
+	{
+		zoneId = Validate(zoneId);
+
+		if (Advertisement.IsReady(zoneId))
+		{
+			Debug.Log("Showing ad now...");
+
 			ShowOptions options = new ShowOptions();
 			options.resultCallback = HandleShowResult;
 			options.gamerSid = _gamerSID;
@@ -246,7 +266,7 @@ public class UnityAdsHelper : MonoBehaviour
 		else 
 		{
 			Debug.LogWarning(string.Format("Unable to show ad. The ad placement zone {0} is not ready.",
-			                               zoneId == null ? "default" : zoneId));
+				zoneId == null ? "default" : zoneId));
 		}
 	}
 	
@@ -277,7 +297,6 @@ public class UnityAdsHelper : MonoBehaviour
 		onSkipped = null;
 		onFailed = null;
 	}
-
 #else
 
 	public static void Initialize () 

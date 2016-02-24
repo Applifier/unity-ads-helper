@@ -1,9 +1,4 @@
-﻿#if UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5_0 || UNITY_5_1
-#define UNITY_ADS_SDK
-#endif
-
-#if UNITY_ADS_SDK
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEditor.Callbacks;
 using UnityEngine;
 using System.Collections;
@@ -139,4 +134,3 @@ public class UnityAdsSettingsEditor : Editor
 		return settings;
 	}
 }
-#endif
