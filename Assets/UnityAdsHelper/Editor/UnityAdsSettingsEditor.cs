@@ -19,8 +19,8 @@ public class UnityAdsSettingsEditor : Editor
 	private const string _helpMsgLogLevels = "Customize the level of debugging by enabling or disabling " +
 		"the following log levels.";
 
+	private const string _urlUnityAdsDocs  = "http://unityads.unity3d.com/help";
 	private const string _urlUnityAdsAdmin = "http://unityads.unity3d.com/admin";
-	private const string _urlUnityAdsDocs = "http://unityads.unity3d.com/help";
 	private const string _urlUnityAdsForum = "http://forum.unity3d.com/forums/unity-ads.67/";
 	
 	[MenuItem("Edit/Unity Ads Settings")]
