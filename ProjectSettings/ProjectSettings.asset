@@ -454,7 +454,7 @@ PlayerSettings:
   Android::VR::enabledDevices:
   - Oculus
   iOS::VR::enabledDevices: []
-  cloudProjectId: 
-  projectName: 
-  organizationId: 
+  cloudProjectId: 033c349b-8a9e-473a-a156-669dd3df8b9a
+  projectName: Helper
+  organizationId: unity-ads-test
   cloudEnabled: 0
