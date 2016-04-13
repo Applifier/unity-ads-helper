@@ -35,7 +35,7 @@ public class UnityAdsHelper : MonoBehaviour
 
 	private static string Validate (string value)
 	{
-		value = value.Trim();
+		if (value != null) value = value.Trim();
 		if (string.IsNullOrEmpty(value)) value = null;
 
 		return value;
