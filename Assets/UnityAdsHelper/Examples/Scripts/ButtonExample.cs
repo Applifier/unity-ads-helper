@@ -23,7 +23,7 @@ public class ButtonExample : MonoBehaviour
 	{
 		_button = GetComponent<Button>();
 
-		if (_button) _button.onClick.AddListener (delegate() { ShowAd(); });
+		if (_button) _button.onClick.AddListener(delegate { ShowAd(); });
 
 		_keyCooldownTime += name + gameObject.GetInstanceID().ToString();
 		_rewardCooldownTime = GetCooldownTime();
