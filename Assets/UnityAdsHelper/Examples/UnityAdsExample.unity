@@ -855,7 +855,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textReady: {fileID: 961610183}
   textWaiting: {fileID: 649745993}
-  zoneId: rewardedVideoZone
+  zoneId: rewardedVideo
   cooldownTime: 15
   rewardAmount: 250
 --- !u!114 &1154846156
