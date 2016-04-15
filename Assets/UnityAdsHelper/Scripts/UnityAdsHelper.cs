@@ -30,7 +30,6 @@ public class UnityAdsHelper : MonoBehaviour
 	/// </summary>
 	/// <value>The gamerSID.</value>
 	public static string gamerSID { get { return _gamerSID; } set { _gamerSID = Validate(value); }}
-
 	private static string _gamerSID;
 
 	private static string Validate (string value)
@@ -41,9 +40,15 @@ public class UnityAdsHelper : MonoBehaviour
 		return value;
 	}
 
-#if UNITY_IOS || UNITY_ANDROID
-
 	private static bool _isInitializing;
+
+	private static UnityAdsSettings _settings;
+	private static UnityAdsSettings GetSettings ()
+	{
+		if (_settings == null) _settings = (UnityAdsSettings)Resources.Load("UnityAdsSettings");
+
+		return _settings;
+	}
 
 	private static UnityAdsHelper _instance;
 	private static UnityAdsHelper GetInstance ()
@@ -73,126 +78,166 @@ public class UnityAdsHelper : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
 	}
 
+	void OnDestroy ()
+	{
+		StopAllCoroutines();
+	}
+
 	/// <summary>
 	/// Initializes the Unity Ads SDK with <see cref="UnityAdsSettings"/>. 
 	/// To configure settings, go to Edit > Unity Ads Settings in the Unity Editor menu.
 	/// </summary>
 	public static void Initialize () 
-	{ 
-	#if !UNITY_ADS
-		if (_isInitializing)
+	{
+		#if UNITY_IOS || UNITY_ANDROID
+		string gameId = null;
+
+		if (GetSettings() == null)
 		{
-			Debug.LogWarning("Unity Ads is already being initialized.");
+			Debug.LogError("Failed to initialize Unity Ads. Settings file not found.");
 			return;
 		}
-		else _isInitializing = true;
+
+		#if UNITY_IOS
+		gameId = _settings.iosGameId.Trim();
+		#elif UNITY_ANDROID
+		gameId = _settings.androidGameId.Trim();
+		#endif
+
+		Initialize(gameId,_settings.enableTestMode);
+
+		#else
+		Debug.LogError("Failed to initialize Unity Ads. Current build platform is not supported.");
+		#endif
+	}
+	public static void Initialize (string gameId)
+	{
+		#if UNITY_IOS || UNITY_ANDROID
+		bool enableTestMode = false;
+
+		if (GetSettings() != null)
+		{
+			enableTestMode = _settings.enableTestMode;
+		}
+
+		Initialize(gameId,enableTestMode);
+
+		#else
+		Debug.LogError("Failed to initialize Unity Ads. Current build platform is not supported.");
+		#endif
+	}
+	public static void Initialize (string gameId, bool enableTestMode) 
+	{ 
+		#if UNITY_IOS || UNITY_ANDROID
+		if (GetSettings() != null)
+		{
+			Advertisement.debugLevel = Advertisement.DebugLevel.None;
+
+			if (_settings.showInfoLogs) Advertisement.debugLevel |= Advertisement.DebugLevel.Info;
+			if (_settings.showDebugLogs) Advertisement.debugLevel |= Advertisement.DebugLevel.Debug;
+			if (_settings.showWarningLogs) Advertisement.debugLevel |= Advertisement.DebugLevel.Warning;
+			if (_settings.showErrorLogs) Advertisement.debugLevel |= Advertisement.DebugLevel.Error;
+
+			Debug.Log("Unity Ads debug level set.");
+		}
 
 		if (isInitialized)
 		{
-			Debug.LogWarning("Unity Ads is already initialized.");
-			_isInitializing = false;
+			Debug.Log("Unity Ads is initialized.");
+			return;
+		}
+		else if (_isInitializing)
+		{
+			Debug.LogWarning("Unity Ads is already being initialized.");
 			return;
 		}
 		else if (!isSupported)
 		{
 			Debug.LogWarning("Unity Ads is not supported on the current runtime platform.");
-			_isInitializing = false;
+			return;
+		}
+		else if (string.IsNullOrEmpty(gameId))
+		{
+			Debug.LogError("Failed to initialize Unity Ads. A valid game ID is required.");
 			return;
 		}
 		else if (GetInstance() == null)
 		{
 			Debug.LogError("Failed to initialize the UnityAdsHelper. Instance not found.");
-			_isInitializing = false;
 			return;
 		}
-		else _instance.DoInitialize();
-
-	#else
-		if (isInitialized)
-		{
-			Debug.Log("Unity Ads is initialized.");
-		}
-		else Debug.LogWarning("Unity Ads is not enabled. See the Connect window in Unity for details.");
-	#endif
-	}
-	
-	private void DoInitialize ()
-	{
+		else _isInitializing = true;
+			
 		Debug.Log("Preparing for Unity Ads initialization...");
 
-		UnityAdsSettings settings = (UnityAdsSettings)Resources.Load("UnityAdsSettings");
-
-		if (settings == null)
-		{
-			Debug.LogError("Failed to initialize Unity Ads. Settings file not found.");
-			_isInitializing = false;
-			return;
-		}
-
-		string gameId = null;
-		
-	#if UNITY_IOS
-		gameId = settings.iosGameId.Trim();
-	#elif UNITY_ANDROID
-		gameId = settings.androidGameId.Trim();
-	#endif
-
-		if (string.IsNullOrEmpty(gameId))
-		{
-			Debug.LogError("Failed to initialize Unity Ads. A valid game ID is required.");
-			_isInitializing = false;
-			return;
-		}
-
-		Advertisement.debugLevel = Advertisement.DebugLevel.None;
-
-		if (settings.showInfoLogs)    Advertisement.debugLevel |= Advertisement.DebugLevel.Info;
-		if (settings.showDebugLogs)   Advertisement.debugLevel |= Advertisement.DebugLevel.Debug;
-		if (settings.showWarningLogs) Advertisement.debugLevel |= Advertisement.DebugLevel.Warning;
-		if (settings.showErrorLogs)   Advertisement.debugLevel |= Advertisement.DebugLevel.Error;
-		
-		if (settings.enableTestMode && !Debug.isDebugBuild)
+		if (enableTestMode && !Debug.isDebugBuild)
 		{
 			Debug.LogWarning("Development Build must be enabled in Build Settings to enable Test Mode for Unity Ads.");
 		}
 		
-		bool isTestModeEnabled = Debug.isDebugBuild && settings.enableTestMode;
+		bool isTestModeEnabled = Debug.isDebugBuild && enableTestMode;
 		Debug.Log(string.Format("Initializing Unity Ads for game ID {0} with Test Mode {1}...",
 			gameId, isTestModeEnabled ? "enabled" : "disabled"));
 		
 		Advertisement.Initialize(gameId,isTestModeEnabled);
 		
-		StartCoroutine(LogWhenUnityAdsIsInitialized());
+		_instance.StartCoroutine(_instance.LogWhenUnityAdsIsInitialized());
+
+		#else
+		Debug.LogError("Failed to initialize Unity Ads. Current build platform is not supported.");
+		#endif
 	}
-	
+
+	#if UNITY_IOS || UNITY_ANDROID
 	private IEnumerator LogWhenUnityAdsIsInitialized ()
 	{
 		float initStartTime = Time.time;
 		
-		do yield return new WaitForSeconds(0.1f);
-		while (!Advertisement.isInitialized);
-		
+		yield return new WaitWhile(() => !Advertisement.isInitialized);
+
 		Debug.Log(string.Format("Unity Ads was initialized in {0:F1} seconds.",Time.time - initStartTime));
 		_isInitializing = false;
 		yield break;
 	}
+	#endif
 
 	/// <summary>
 	/// Gets a value indicating whether an ad is currently showing.
 	/// </summary>
 	/// <value><c>true</c> if is showing; otherwise, <c>false</c>.</value>
-	public static bool isShowing { get { return Advertisement.isShowing; }}
+	public static bool isShowing 
+	{ 
+		#if UNITY_IOS || UNITY_ANDROID
+		get { return Advertisement.isShowing; }
+		#else
+		get { return false; }
+		#endif
+	}
 	/// <summary>
 	/// Gets a value indicating whether Unity Ads is supported in the current Unity player. 
 	/// Supported players include iOS, Android, and the Unity Editor.
 	/// </summary>
 	/// <value><c>true</c> if is supported; otherwise, <c>false</c>.</value>
-	public static bool isSupported { get { return Advertisement.isSupported; }}
+	public static bool isSupported 
+	{ 
+		#if UNITY_IOS || UNITY_ANDROID
+		get { return Advertisement.isSupported; }
+		#else
+		get { return false; }
+		#endif
+	}
 	/// <summary>
 	/// Gets a value indicating whether Unity Ads is initialized.
 	/// </summary>
 	/// <value><c>true</c> if is initialized; otherwise, <c>false</c>.</value>
-	public static bool isInitialized { get { return Advertisement.isInitialized; }}
+	public static bool isInitialized 
+	{ 
+		#if UNITY_IOS || UNITY_ANDROID
+		get { return Advertisement.isInitialized; }
+		#else
+		get { return false; }
+		#endif
+	}
 	
 	/// <summary>
 	/// Determines if Unity Ads is initialized and ready to show an ad using the default ad placement zone.
@@ -207,50 +252,38 @@ public class UnityAdsHelper : MonoBehaviour
 	/// <param name="zoneId">Ad placment zone ID.</param>
 	public static bool IsReady (string zoneId) 
 	{
+		#if UNITY_IOS || UNITY_ANDROID
 		return Advertisement.IsReady(Validate(zoneId));
+		#else
+		return false;
+		#endif
 	}
 
 	/// <summary>
 	/// Shows an ad using the default ad placement zone.
 	/// </summary>
-	public static void ShowAd () { ShowAd(null); }
+	public static void ShowAd () { ShowAd(null,false); }
 	/// <summary>
 	/// Shows an ad using the specified ad placement zone ID.
 	/// To use the default ad placement zone, pass in a <c>null</c> value for the zone ID.
 	/// </summary>
 	/// <param name="zoneId">Ad placement zone ID.</param>
-	public static void ShowAd (string zoneId)
-	{
-		zoneId = Validate(zoneId);
-
-		if (Advertisement.IsReady(zoneId))
-		{
-			Debug.Log("Showing ad now...");
-			
-			ShowOptions options = new ShowOptions();
-			options.resultCallback = HandleShowResult;
-			options.gamerSid = null; // When using S2S Redeem Callbacks, ignore callbacks without an 'sid' parameter value.
-
-			Advertisement.Show(zoneId,options);
-		}
-		else 
-		{
-			Debug.LogWarning(string.Format("Unable to show ad. The ad placement zone {0} is not ready.",
-				zoneId == null ? "default" : zoneId));
-		}
-	}
+	public static void ShowAd (string zoneId) { ShowAd(zoneId,false); }
 
 	/// <summary>
 	/// Shows a rewarded ad using the default ad placement zone.
 	/// </summary>
-	public static void ShowRewardedAd () { ShowAd(null); }
+	public static void ShowRewardedAd () { ShowAd(null,true); }
 	/// <summary>
 	/// Shows a rewarded ad using the specified ad placement zone ID.
 	/// To use the default ad placement zone, pass in a <c>null</c> value for the zone ID.
 	/// </summary>
 	/// <param name="zoneId">Ad placement zone ID.</param>
-	public static void ShowRewardedAd (string zoneId)
+	public static void ShowRewardedAd (string zoneId) { ShowAd(zoneId,true); }
+
+	private static void ShowAd (string zoneId, bool rewarded)
 	{
+		#if UNITY_IOS || UNITY_ANDROID
 		zoneId = Validate(zoneId);
 
 		if (Advertisement.IsReady(zoneId))
@@ -259,7 +292,7 @@ public class UnityAdsHelper : MonoBehaviour
 
 			ShowOptions options = new ShowOptions();
 			options.resultCallback = HandleShowResult;
-			options.gamerSid = _gamerSID;
+			options.gamerSid = rewarded ? _gamerSID : null;
 
 			Advertisement.Show(zoneId,options);
 		}
@@ -268,8 +301,13 @@ public class UnityAdsHelper : MonoBehaviour
 			Debug.LogWarning(string.Format("Unable to show ad. The ad placement zone {0} is not ready.",
 				zoneId == null ? "default" : zoneId));
 		}
+
+		#else
+		Debug.LogError("Failed to show ad. Unity Ads does not support the current build platform.");
+		#endif
 	}
-	
+
+	#if UNITY_IOS || UNITY_ANDROID
 	private static void HandleShowResult (ShowResult result)
 	{
 		switch (result)
@@ -290,6 +328,7 @@ public class UnityAdsHelper : MonoBehaviour
 
 		ClearActions();
 	}
+	#endif
 
 	private static void ClearActions ()
 	{
@@ -297,25 +336,4 @@ public class UnityAdsHelper : MonoBehaviour
 		onSkipped = null;
 		onFailed = null;
 	}
-#else
-
-	public static void Initialize () 
-	{
-		Debug.LogError("Failed to initialize Unity Ads. Current build platform is not supported.");
-	}
-
-	public static bool isShowing { get { return false; }}
-	public static bool isSupported { get { return false; }}
-	public static bool isInitialized { get { return false; }}
-	
-	public static bool IsReady () { return false; }
-	public static bool IsReady (string zoneId) { return false; }
-	
-	public static void ShowAd () { ShowAd(null); }
-	public static void ShowAd (string zoneId) 
-	{
-		Debug.LogError("Failed to show ad. Unity Ads does not support the current build platform.");
-	}
-
-#endif
 }

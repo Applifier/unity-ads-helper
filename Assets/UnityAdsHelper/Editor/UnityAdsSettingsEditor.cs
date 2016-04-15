@@ -3,6 +3,9 @@ using UnityEditor.Callbacks;
 using UnityEngine;
 using System.Collections;
 using System.IO;
+#if UNITY_ADS
+using UnityEditor.Advertisements;
+#endif
 
 [CustomEditor(typeof(UnityAdsSettings))]
 public class UnityAdsSettingsEditor : Editor 
@@ -19,8 +22,8 @@ public class UnityAdsSettingsEditor : Editor
 	private const string _helpMsgLogLevels = "Customize the level of debugging by enabling or disabling " +
 		"the following log levels.";
 
-	private const string _urlUnityAdsDocs  = "http://unityads.unity3d.com/help";
-	private const string _urlUnityAdsAdmin = "http://unityads.unity3d.com/admin";
+	private const string _urlUnityAdsDocs  = "http://github.com/Applifier/unity-ads-helper/wiki";
+	private const string _urlUnityAdsAdmin = "http://dashboard.unityads.unity3d.com";
 	private const string _urlUnityAdsForum = "http://forum.unity3d.com/forums/unity-ads.67/";
 	
 	[MenuItem("Edit/Unity Ads Settings")]
@@ -51,6 +54,19 @@ public class UnityAdsSettingsEditor : Editor
 
 		EditorGUILayout.Space();
 
+		bool overrideInitialization = false;
+
+		#if UNITY_ADS
+		overrideInitialization = !AdvertisementSettings.initializeOnStartup;
+
+		overrideInitialization = 
+			EditorGUILayout.ToggleLeft(" Override initialization of Unity Ads",overrideInitialization);
+
+		AdvertisementSettings.initializeOnStartup = !overrideInitialization;
+
+		EditorGUILayout.Space();
+		#endif
+
 		GUI.enabled = !Application.isPlaying;
 
 		UnityAdsSettings settings = (UnityAdsSettings)target;
@@ -58,7 +74,7 @@ public class UnityAdsSettingsEditor : Editor
 		Undo.RecordObject(settings,"Inspector");
 
 		MessageType _msgTypeGameIds = MessageType.Info;
-	#if UNITY_IOS
+		#if UNITY_IOS
 		if (settings.iosGameId == UnityAdsSettings.defaultIosGameId)
 		{
 			_msgTypeGameIds = MessageType.Warning;
@@ -67,7 +83,7 @@ public class UnityAdsSettingsEditor : Editor
 		{
 			_msgTypeGameIds = MessageType.Error;
 		} 
-	#elif UNITY_ANDROID
+		#elif UNITY_ANDROID
 		if (settings.androidGameId == UnityAdsSettings.defaultAndroidGameId)
 		{
 			_msgTypeGameIds = MessageType.Warning;
@@ -76,26 +92,30 @@ public class UnityAdsSettingsEditor : Editor
 		{
 			_msgTypeGameIds = MessageType.Error;
 		}
-	#else
+		#else
 		EditorGUILayout.HelpBox(_helpMsgPlatform,MessageType.Warning);
-	#endif
+		#endif
 
-		EditorGUILayout.HelpBox(_helpMsgGameIds,_msgTypeGameIds);
-		settings.iosGameId       = EditorGUILayout.TextField("iOS Game ID",settings.iosGameId);
-		settings.androidGameId   = EditorGUILayout.TextField("Android Game ID",settings.androidGameId);
-
-		EditorGUILayout.Space();
-
-		MessageType _msgTypeTestMode = MessageType.Info;
-		if (settings.enableTestMode && !EditorUserBuildSettings.development) 
+		if (overrideInitialization) 
 		{
-			_msgTypeTestMode = MessageType.Warning;
+			EditorGUILayout.HelpBox(_helpMsgGameIds, _msgTypeGameIds);
+			settings.iosGameId = EditorGUILayout.TextField("iOS Game ID", settings.iosGameId);
+			settings.androidGameId = EditorGUILayout.TextField("Android Game ID", settings.androidGameId);
+
+			EditorGUILayout.Space();
+
+			MessageType _msgTypeTestMode = MessageType.Info;
+			if (settings.enableTestMode && !EditorUserBuildSettings.development) {
+				_msgTypeTestMode = MessageType.Warning;
+			}
+
+			EditorGUILayout.HelpBox(_helpMsgTestMode, _msgTypeTestMode);
+			settings.enableTestMode = EditorGUILayout.ToggleLeft(" Enable Test Mode", settings.enableTestMode);
+			EditorUserBuildSettings.development = 
+				EditorGUILayout.ToggleLeft(" Enable Development Build", EditorUserBuildSettings.development);
+
+			EditorGUILayout.Space();
 		}
-
-		EditorGUILayout.HelpBox(_helpMsgTestMode,_msgTypeTestMode);
-		settings.enableTestMode  = EditorGUILayout.ToggleLeft(" Enable Test Mode",settings.enableTestMode);
-
-		EditorGUILayout.Space();
 
 		EditorGUILayout.HelpBox(_helpMsgLogLevels,MessageType.Info);
 		settings.showInfoLogs    = EditorGUILayout.ToggleLeft(" Show Info Logs",settings.showInfoLogs);
@@ -104,6 +124,7 @@ public class UnityAdsSettingsEditor : Editor
 		settings.showErrorLogs   = EditorGUILayout.ToggleLeft(" Show Error Logs",settings.showErrorLogs);
 
 		EditorUtility.SetDirty(settings);
+		EditorApplication.SaveAssets();
 
 		EditorGUILayout.Space();
 
@@ -121,12 +142,18 @@ public class UnityAdsSettingsEditor : Editor
 		
 		if (settings != null) 
 		{
-			if (!System.IO.Directory.Exists(Application.dataPath + "/Assets/Resources"))
+			if (!System.IO.Directory.Exists(Application.dataPath + "/Resources"))
 			{
 				AssetDatabase.CreateFolder("Assets","Resources");
 			}
 
 			AssetDatabase.CreateAsset(settings, "Assets/Resources/" + _settingsFile + _settingsFileExtension);
+
+			#if UNITY_ADS
+			settings.androidGameId = AdvertisementSettings.GetGameId(RuntimePlatform.Android);
+			settings.iosGameId = AdvertisementSettings.GetGameId(RuntimePlatform.IPhonePlayer);
+			#endif
+
 			AssetDatabase.SaveAssets();
 			AssetDatabase.Refresh();
 		}
