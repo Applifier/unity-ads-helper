@@ -25,12 +25,6 @@ public class UnityAdsHelper : MonoBehaviour
 	/// </summary>
 	public static Action onFailed;
 
-	/// <summary>
-	/// The gamerSID is a unique identifier used with Server-to-Server Redeem Callbacks.
-	/// </summary>
-	/// <value>The gamerSID.</value>
-	public static string gamerSID { get { return _gamerSID; } set { _gamerSID = Validate(value); }}
-
 	public static UnityAdsHelper Instance
 	{
 		get 
@@ -224,18 +218,13 @@ public class UnityAdsHelper : MonoBehaviour
 	#endif
 
 	/// <summary>
-	/// Gets a value indicating whether an ad is currently showing.
+	/// The gamerSID is a unique identifier used with Server-to-Server Redeem Callbacks.
 	/// </summary>
-	/// <value><c>true</c> if is showing; otherwise, <c>false</c>.</value>
-	public static bool isShowing 
+	/// <value>The gamerSID.</value>
+	public static string gamerSID 
 	{ 
-		get { 
-			#if UNITY_IOS || UNITY_ANDROID
-			return Advertisement.isShowing;
-			#else
-			return false;
-			#endif
-		}
+		get { return _gamerSID; } 
+		set { _gamerSID = Validate(value); }
 	}
 	/// <summary>
 	/// Gets a value indicating whether Unity Ads is supported in the current Unity player. 
@@ -253,6 +242,14 @@ public class UnityAdsHelper : MonoBehaviour
 		}
 	}
 	/// <summary>
+	/// Gets a value indicating whether Unity Ads is being initialized.
+	/// </summary>
+	/// <value><c>true</c> if is being initialized; otherwise, <c>false</c>.</value>
+	public static bool isInitializing 
+	{ 
+		get { return _isInitializing; }
+	}
+	/// <summary>
 	/// Gets a value indicating whether Unity Ads is initialized.
 	/// </summary>
 	/// <value><c>true</c> if is initialized; otherwise, <c>false</c>.</value>
@@ -266,7 +263,21 @@ public class UnityAdsHelper : MonoBehaviour
 			#endif
 		}
 	}
-	
+	/// <summary>
+	/// Gets a value indicating whether an ad is currently showing.
+	/// </summary>
+	/// <value><c>true</c> if is showing; otherwise, <c>false</c>.</value>
+	public static bool isShowing 
+	{ 
+		get { 
+			#if UNITY_IOS || UNITY_ANDROID
+			return Advertisement.isShowing;
+			#else
+			return false;
+			#endif
+		}
+	}
+
 	/// <summary>
 	/// Determines if Unity Ads is initialized and ready to show an ad using the default ad placement zone.
 	/// </summary>
