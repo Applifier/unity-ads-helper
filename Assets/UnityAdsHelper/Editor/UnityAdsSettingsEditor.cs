@@ -54,24 +54,29 @@ public class UnityAdsSettingsEditor : Editor
 
 		EditorGUILayout.Space();
 
-		bool overrideInitialization = false;
-
-		#if UNITY_ADS
-		overrideInitialization = !AdvertisementSettings.initializeOnStartup;
-
-		overrideInitialization = 
-			EditorGUILayout.ToggleLeft(" Override initialization of Unity Ads",overrideInitialization);
-
-		AdvertisementSettings.initializeOnStartup = !overrideInitialization;
-
-		EditorGUILayout.Space();
-		#endif
-
-		GUI.enabled = !Application.isPlaying;
-
 		UnityAdsSettings settings = (UnityAdsSettings)target;
 
 		Undo.RecordObject(settings,"Inspector");
+
+		GUI.enabled = !Application.isPlaying;
+
+		bool overrideInitialization = settings.overrideAdsServiceInit;
+
+		#if UNITY_ADS
+		overrideInitialization = 
+			EditorGUILayout.ToggleLeft(" Override initialization of Ads Service",overrideInitialization);
+
+		if (settings.overrideAdsServiceInit != overrideInitialization)
+		{
+			settings.overrideAdsServiceInit = overrideInitialization;
+			AdvertisementSettings.initializeOnStartup = !settings.overrideAdsServiceInit;
+			EditorApplication.SaveAssets();
+		}
+
+		EditorGUILayout.Space();
+		#else
+		overrideInitialization = true;
+		#endif
 
 		MessageType _msgTypeGameIds = MessageType.Info;
 		#if UNITY_IOS
@@ -124,7 +129,6 @@ public class UnityAdsSettingsEditor : Editor
 		settings.showErrorLogs   = EditorGUILayout.ToggleLeft(" Show Error Logs",settings.showErrorLogs);
 
 		EditorUtility.SetDirty(settings);
-		EditorApplication.SaveAssets();
 
 		EditorGUILayout.Space();
 
@@ -150,8 +154,9 @@ public class UnityAdsSettingsEditor : Editor
 			AssetDatabase.CreateAsset(settings, "Assets/Resources/" + _settingsFile + _settingsFileExtension);
 
 			#if UNITY_ADS
-			settings.androidGameId = AdvertisementSettings.GetGameId(RuntimePlatform.Android);
 			settings.iosGameId = AdvertisementSettings.GetGameId(RuntimePlatform.IPhonePlayer);
+			settings.androidGameId = AdvertisementSettings.GetGameId(RuntimePlatform.Android);
+			settings.overrideAdsServiceInit = !AdvertisementSettings.initializeOnStartup;
 			#endif
 
 			AssetDatabase.SaveAssets();

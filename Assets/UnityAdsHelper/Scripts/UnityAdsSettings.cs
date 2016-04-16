@@ -8,7 +8,9 @@ public class UnityAdsSettings : ScriptableObject
 
 	public string iosGameId     = null;
 	public string androidGameId = null;
-	
+
+	public bool overrideAdsServiceInit = true;
+
 	public bool enableTestMode  = true;
 	public bool showInfoLogs    = false;
 	public bool showDebugLogs   = false;
