@@ -4,8 +4,23 @@ using UnityEngine.UI;
 using EventSystem = UnityEngine.EventSystems.EventSystem;
 using System.Collections;
 
-public class UnityAdsButtonEditor : Editor 
+public class UnityAdsHelperEditor : Editor 
 {
+	[MenuItem("GameObject/Unity Ads/Helper",false,5)]
+	public static void CreteUnityAdsHelper ()
+	{
+		UnityAdsHelper helper = GameObject.FindObjectOfType<UnityAdsHelper>() as UnityAdsHelper;
+		GameObject gO = (helper != null ? helper.gameObject : null);
+
+		if (gO == null)
+		{
+			gO = new GameObject("UnityAdsHelper");
+			gO.AddComponent<UnityAdsHelper>();
+		}
+
+		if (gO) Selection.activeGameObject = gO;
+	}
+
 	[MenuItem("GameObject/Unity Ads/Button",false,5)]
 	public static void CreateUnityAdsButton ()
 	{
@@ -54,6 +69,8 @@ public class UnityAdsButtonEditor : Editor
 					if (canvas) gO.GetComponent<Transform>().SetParent(canvas.transform);
 
 					button = gO.GetComponent<Button>();
+
+					Selection.activeGameObject = gO;
 				}
 			}
 		}
