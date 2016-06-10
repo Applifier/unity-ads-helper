@@ -24,6 +24,8 @@ public class UnityAdsButton : MonoBehaviour
 	{
 		_button = GetComponent<Button>();
 
+		if (_button) _button.onClick.AddListener(ShowAd);
+
 		_keyCooldownTime += name + gameObject.GetInstanceID().ToString();
 		_rewardCooldownTime = GetCooldownTime();
 
