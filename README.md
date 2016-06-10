@@ -1,13 +1,13 @@
 # Unity Ads Helper
 
-Documentation for the Unity Ads Helper is available in the [[Wiki|wiki]].
+Documentation for the Unity Ads Helper is available in the [Wiki](../.../wiki).
 
-* [[Home|Home]]
-* [[Getting Started|getting-started]]
-* [[User Guide|user-guide]]
-  * [[Initialization|user-guide-initialization]]
-  * [[UnityAdsButton|user-guide-button]]
-  * [[Showing Ads|user-guide-showing-ads]]
-  * [[Rewarded Ads|user-guide-rewarded-ads]]
-* [[Example Assets|examples]]
-* [[API Reference|api-reference]]
+* [Home](../.../wiki/Home)
+* [Getting Started](../.../wiki/getting-started)
+* [User Guide](../.../wiki/user-guide)
+  * [Initialization](../.../wiki/user-guide-initialization)
+  * [UnityAdsButton](../.../wiki/user-guide-button)
+  * [Showing Ads](../.../wiki/user-guide-showing-ads)
+  * [Rewarded Ads](../.../wiki/user-guide-rewarded-ads)
+* [Example Assets](../.../wiki/examples)
+* [API Reference](../.../wiki/api-reference)
