@@ -1,4 +1,8 @@
-﻿using System;
+﻿#if UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2
+#define UNITY_LEGACY
+#endif
+
+using System;
 using UnityEngine;
 using System.Collections;
 #if UNITY_IOS || UNITY_ANDROID
@@ -209,7 +213,12 @@ public class UnityAdsHelper : MonoBehaviour
 	{
 		float initStartTime = Time.time;
 		
+		#if UNITY_LEGACY
+		do yield return null;
+		while (!Advertisement.isInitialized);
+		#else
 		yield return new WaitWhile(() => !Advertisement.isInitialized);
+		#endif
 
 		Debug.Log(string.Format("Unity Ads was initialized in {0:F1} seconds.",Time.time - initStartTime));
 		_isInitializing = false;

@@ -1,7 +1,13 @@
-﻿using UnityEngine;
+﻿#if UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_5_0 || UNITY_5_1 || UNITY_5_2
+#define UNITY_LEGACY
+#endif
+
+using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Collections;
+#if !UNITY_LEGACY
+using UnityEngine.SceneManagement;
+#endif
 
 public class SetupExample : MonoBehaviour 
 {
@@ -45,6 +51,10 @@ public class SetupExample : MonoBehaviour
 		if (testModeToggle) enableTestMode = testModeToggle.isOn;
 
 		UnityAdsHelper.Initialize(gameId,enableTestMode);
-		SceneManager.LoadScene("UnityAdsExample");
+#if !UNITY_LEGACY
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+#else
+		Application.LoadLevel(Application.loadedLevel + 1);
+#endif
 	}
 }

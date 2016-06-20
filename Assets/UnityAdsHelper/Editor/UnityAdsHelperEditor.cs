@@ -27,53 +27,46 @@ public class UnityAdsHelperEditor : Editor
 		EventSystem eventsys = GameObject.FindObjectOfType<EventSystem>();
 		if (eventsys == null)
 		{
-			GameObject prefab = Resources.Load("EventSystem",typeof(GameObject)) as GameObject;
-			if (prefab)
-			{
-				GameObject gO = Instantiate(prefab) as GameObject;
-				if (gO)
-				{ 
-					gO.name = "EventSystem";
-					eventsys = gO.GetComponent<EventSystem>();
-				}
-			}
+			GameObject gO = new GameObject("EventSystem");
+			eventsys = gO.AddComponent<EventSystem>();
+			gO.AddComponent<UnityEngine.EventSystems.StandaloneInputModule>();
 		}
 
+		//TODO: Get canvas in closest relation to current selected object.
 		Canvas canvas = GameObject.FindObjectOfType<Canvas>();
 		if (canvas == null)
 		{
-			GameObject prefab = Resources.Load("Canvas",typeof(GameObject)) as GameObject;
-			if (prefab)
-			{
-				GameObject gO = Instantiate(prefab) as GameObject;
-				if (gO)
-				{
-					gO.name = "Canvas";
-					canvas = gO.GetComponent<Canvas>();
-				}
-			}
+			GameObject gO = new GameObject("Canvas", typeof(RectTransform));
+			canvas = gO.AddComponent<Canvas>();
+			canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+			gO.AddComponent<CanvasScaler>();
+			gO.AddComponent<GraphicRaycaster>();
+			gO.layer = 5;
 		}
 			
-		Button button = GameObject.FindObjectOfType<Button>();
-		if (button == null)
-		{
-			GameObject prefab = Resources.Load("Button",typeof(GameObject)) as GameObject;
-			if (prefab)
-			{
-				GameObject gO = Instantiate(prefab) as GameObject;
-				if (gO)
-				{
-					gO.name = "UnityAdsButton";
-					gO.AddComponent<UnityAdsButton>();
+		GameObject buttonObj = new GameObject("UnityAdsButton", typeof(RectTransform));
 
-					if (canvas) gO.GetComponent<Transform>().SetParent(canvas.transform);
+		if (canvas) buttonObj.transform.SetParent(canvas.transform);
 
-					button = gO.GetComponent<Button>();
+		RectTransform buttonRect = buttonObj.GetComponent<RectTransform>();
+		buttonRect.anchoredPosition = Vector3.zero;
+		buttonRect.sizeDelta = new Vector2(160f,30f);
+		buttonObj.AddComponent<Image>();
+		buttonObj.AddComponent<UnityAdsButton>();
+		buttonObj.layer = 5;
 
-					Selection.activeGameObject = gO;
-				}
-			}
-		}
+		GameObject textObj = new GameObject("Text", typeof(RectTransform));
 
+		if (buttonObj) textObj.transform.SetParent(buttonObj.transform);
+
+		RectTransform textRect = textObj.GetComponent<RectTransform>();
+		textRect.anchoredPosition = Vector3.zero;
+		textRect.anchorMin = new Vector2(0f, 0f);
+		textRect.anchorMax = new Vector2(1f, 1f);
+		textObj.AddComponent<Text>();
+
+		textObj.layer = 5;
+
+		Selection.activeGameObject = buttonObj;
 	}
 }
